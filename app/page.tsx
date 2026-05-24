@@ -137,8 +137,8 @@ export default function Page() {
               <div className="relative h-96 lg:h-[500px] rounded-2xl overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20" />
                 <img
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/aydiaah_hero-9T3DKL4dL1awT8pilwIpRgZSAzxyFP.jpeg"
-                  alt="Premium Lip Liner - Latest Product"
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Gemini_Generated_Image_kzcllckzcllckzcl-tAr7RLjl6DNyFhnPjzsFDESDnl51jd.png"
+                  alt="Ayidaah Lip Liner - Before and After Results"
                   className="w-full h-full object-cover"
                 />
               </div>
