@@ -84,12 +84,7 @@ export default function Page() {
       <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-secondary">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
-                <span className="text-white font-bold text-lg">A</span>
-              </div>
-              <h1 className="text-xl font-bold text-primary">Ayidaah Beauty</h1>
-            </div>
+            <h1 className="text-xl font-bold text-primary">Ayidaah Beauty</h1>
             <div className="hidden md:flex gap-8 items-center">
               <a href="#featured" className="text-sm font-medium hover:text-primary transition">Products</a>
               <a href="#about" className="text-sm font-medium hover:text-primary transition">About</a>
@@ -496,12 +491,7 @@ export default function Page() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-                  <span className="text-white font-bold">A</span>
-                </div>
-                <span className="font-bold">Ayidaah Beauty</span>
-              </div>
+              <h3 className="font-bold mb-4">Ayidaah Beauty</h3>
               <p className="text-sm text-gray-300">Premium beauty products for the modern you.</p>
             </div>
             <div>
