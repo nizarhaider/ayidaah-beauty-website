@@ -18,57 +18,57 @@ export default function Page() {
   const products = [
     {
       id: '1',
-      name: 'Luminous Foundation',
-      price: 'Rs. 3,500',
-      category: 'Makeup',
-      rating: 4.8,
-      reviews: 127,
-      image: 'https://images.unsplash.com/photo-1571875285368-40aac642fa5d?w=500&h=500&fit=crop'
+      name: 'Classic Gel Manicure',
+      price: 'Rs. 2,500',
+      category: 'Nail Service',
+      rating: 4.9,
+      reviews: 187,
+      image: '/nail-art-1.jpg'
     },
     {
       id: '2',
-      name: 'Silk Glow Primer',
-      price: 'Rs. 2,800',
-      category: 'Skincare',
+      name: 'Premium Nail Art Design',
+      price: 'Rs. 3,500',
+      category: 'Nail Art',
       rating: 4.9,
-      reviews: 89,
-      image: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=500&h=500&fit=crop'
+      reviews: 142,
+      image: '/nail-art-2.jpg'
     },
     {
       id: '3',
-      name: 'Rose Petal Lipstick',
-      price: 'Rs. 2,200',
-      category: 'Makeup',
-      rating: 4.7,
+      name: 'Ombre Gradient Design',
+      price: 'Rs. 3,000',
+      category: 'Nail Art',
+      rating: 4.8,
       reviews: 156,
-      image: 'https://images.unsplash.com/photo-1599931696905-87669ef3be66?w=500&h=500&fit=crop'
+      image: '/nail-art-3.jpg'
     },
     {
       id: '4',
-      name: 'Hydrating Face Serum',
-      price: 'Rs. 3,200',
-      category: 'Skincare',
+      name: 'Chrome & Glitter Nails',
+      price: 'Rs. 3,800',
+      category: 'Premium Art',
       rating: 4.9,
       reviews: 203,
-      image: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=500&h=500&fit=crop'
+      image: '/nail-art-4.jpg'
     },
     {
       id: '5',
-      name: 'Velvet Eye Palette',
-      price: 'Rs. 2,900',
-      category: 'Makeup',
-      rating: 4.8,
+      name: 'Bridal Nail Package',
+      price: 'Rs. 5,500',
+      category: 'Special Service',
+      rating: 4.9,
       reviews: 94,
-      image: 'https://images.unsplash.com/photo-1598949129225-8988a2250cfd?w=500&h=500&fit=crop'
+      image: 'https://images.unsplash.com/photo-1604654894610-df63bc536371?w=500&h=500&fit=crop'
     },
     {
       id: '6',
-      name: 'Luxury Night Cream',
-      price: 'Rs. 3,800',
-      category: 'Skincare',
-      rating: 4.9,
+      name: 'Pedicure & Nail Care',
+      price: 'Rs. 2,800',
+      category: 'Nail Service',
+      rating: 4.8,
       reviews: 172,
-      image: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=500&h=500&fit=crop'
+      image: 'https://images.unsplash.com/photo-1604654894610-df63bc536371?w=500&h=500&fit=crop'
     }
   ]
 
@@ -207,6 +207,111 @@ export default function Page() {
             <Button size="lg" className="bg-primary hover:bg-primary/90 text-white">
               View All Products
             </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <p className="text-sm font-semibold text-primary mb-2">Customer Love</p>
+            <h3 className="text-4xl lg:text-5xl font-bold mb-4 text-balance">What Our Clients Say</h3>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Join hundreds of satisfied customers who&apos;ve transformed their beauty routine with Ayidaah Beauty.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            <Card className="p-6 hover:shadow-lg transition-shadow">
+              <div className="flex items-center gap-1 mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} size={16} className="fill-yellow-400 text-yellow-400" />
+                ))}
+              </div>
+              <p className="text-gray-600 mb-4 leading-relaxed">
+                &quot;The quality of products is exceptional! I&apos;ve been a regular customer for over a year and I&apos;m always impressed with the selection and the staff&apos;s knowledge.&quot;
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
+                  <span className="text-primary font-bold">N</span>
+                </div>
+                <div>
+                  <p className="font-semibold text-foreground">Nishanthi De Silva</p>
+                  <p className="text-sm text-gray-500">Colombo, Sri Lanka</p>
+                </div>
+              </div>
+            </Card>
+
+            <Card className="p-6 hover:shadow-lg transition-shadow">
+              <div className="flex items-center gap-1 mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} size={16} className="fill-yellow-400 text-yellow-400" />
+                ))}
+              </div>
+              <p className="text-gray-600 mb-4 leading-relaxed">
+                &quot;Ayidaah Beauty transformed my beauty routine completely. Their personalized recommendations were spot-on for my skin type. Highly recommend!&quot;
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
+                  <span className="text-primary font-bold">M</span>
+                </div>
+                <div>
+                  <p className="font-semibold text-foreground">Malini Kapoor</p>
+                  <p className="text-sm text-gray-500">Rajagiriya, Sri Lanka</p>
+                </div>
+              </div>
+            </Card>
+
+            <Card className="p-6 hover:shadow-lg transition-shadow">
+              <div className="flex items-center gap-1 mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} size={16} className="fill-yellow-400 text-yellow-400" />
+                ))}
+              </div>
+              <p className="text-gray-600 mb-4 leading-relaxed">
+                &quot;The nail art services are incredible! Every visit I leave feeling like a queen. The attention to detail is unmatched. Worth every rupee!&quot;
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
+                  <span className="text-primary font-bold">A</span>
+                </div>
+                <div>
+                  <p className="font-semibold text-foreground">Amira Jayasena</p>
+                  <p className="text-sm text-gray-500">Mount Lavinia, Sri Lanka</p>
+                </div>
+              </div>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Gallery Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <p className="text-sm font-semibold text-primary mb-2">Our Portfolio</p>
+            <h3 className="text-4xl lg:text-5xl font-bold mb-4 text-balance">Nail Art Masterpieces</h3>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Showcasing our latest and most stunning nail art designs. Every design is a unique creation tailored to our clients&apos; preferences.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {['/nail-art-1.jpg', '/nail-art-2.jpg', '/nail-art-3.jpg', '/nail-art-4.jpg'].map((image, index) => (
+              <div key={index} className="group relative h-64 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow">
+                <img
+                  src={image}
+                  alt={`Nail art design ${index + 1}`}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
+                  <button className="opacity-0 group-hover:opacity-100 bg-primary text-white px-6 py-2 rounded-full transition-opacity hover:bg-primary/90">
+                    View Design
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
