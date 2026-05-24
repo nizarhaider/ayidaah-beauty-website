@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Heart, MapPin, Phone, Mail, Instagram, Star } from 'lucide-react'
+import { Heart, MapPin, Phone, Mail, Instagram, Star, Truck } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 
@@ -13,6 +13,12 @@ export default function Page() {
       ...prev,
       [id]: !prev[id]
     }))
+  }
+
+  const handleWhatsAppInquiry = (productName: string) => {
+    const message = `Hi! I'm interested in ${productName}. Can you provide more details?`
+    const whatsappUrl = `https://wa.me/94712345678?text=${encodeURIComponent(message)}`
+    window.open(whatsappUrl, '_blank')
   }
 
   const products = [
@@ -105,7 +111,7 @@ export default function Page() {
                   Radiant Beauty, <span className="text-primary">Perfectly Crafted</span>
                 </h2>
                 <p className="text-lg text-gray-600 leading-relaxed mb-8">
-                  Discover our curated collection of premium beauty products designed to enhance your natural glow. From skincare to makeup, find everything you need at our Rajagiriya store.
+                  Discover our curated collection of premium beauty products designed to enhance your natural glow. From nail art to lipsticks, find everything you need at our Rajagiriya store.
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row gap-4">
@@ -131,13 +137,46 @@ export default function Page() {
               <div className="relative h-96 lg:h-[500px] rounded-2xl overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20" />
                 <img
-                  src="https://images.unsplash.com/photo-1607748328020-23404e976ac3?w=600&h=700&fit=crop"
-                  alt="Beauty Product"
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/aydiaah_hero-9T3DKL4dL1awT8pilwIpRgZSAzxyFP.jpeg"
+                  alt="Premium Lip Liner - Latest Product"
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-primary rounded-full blur-3xl opacity-20" />
               <div className="absolute -top-6 -right-6 w-40 h-40 bg-secondary rounded-full blur-3xl opacity-20" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Delivery Options */}
+      <section className="py-12 bg-primary/5 border-y border-secondary">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-8">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center">
+                <Truck className="text-primary" size={24} />
+              </div>
+              <div>
+                <p className="font-semibold text-foreground">Fast Delivery</p>
+                <p className="text-sm text-gray-600">Available Now</p>
+              </div>
+            </div>
+            <div className="hidden sm:block w-px h-12 bg-secondary" />
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center font-bold text-primary">Uber</div>
+              <div>
+                <p className="font-semibold text-foreground">Uber Eats</p>
+                <p className="text-sm text-gray-600">Order & Deliver</p>
+              </div>
+            </div>
+            <div className="hidden sm:block w-px h-12 bg-secondary" />
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center font-bold text-primary">PickMe</div>
+              <div>
+                <p className="font-semibold text-foreground">PickMe Food</p>
+                <p className="text-sm text-gray-600">Easy Ordering</p>
+              </div>
             </div>
           </div>
         </div>
@@ -194,8 +233,12 @@ export default function Page() {
                   </div>
                   <div className="flex justify-between items-center pt-2 border-t border-secondary">
                     <span className="font-bold text-lg text-primary">{product.price}</span>
-                    <Button size="sm" className="bg-primary hover:bg-primary/90">
-                      Add to Cart
+                    <Button 
+                      size="sm" 
+                      className="bg-primary hover:bg-primary/90"
+                      onClick={() => handleWhatsAppInquiry(product.name)}
+                    >
+                      Inquire Now
                     </Button>
                   </div>
                 </div>
@@ -320,10 +363,10 @@ export default function Page() {
       <section id="about" className="py-20 bg-gradient-to-br from-primary/5 via-secondary/10 to-primary/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="relative h-96 lg:h-[450px] rounded-2xl overflow-hidden">
+            <div className="relative h-96 lg:h-[450px] rounded-2xl overflow-hidden shadow-lg">
               <img
-                src="https://images.unsplash.com/photo-1571875285368-40aac642fa5d?w=600&h=700&fit=crop"
-                alt="Ayidaah Beauty Store"
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ayidaah%20image%202-6o2YrNvt26QHcfTwwIMJBsCMN5zP1y.jpg"
+                alt="Ayidaah Beauty Founder with Products"
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
@@ -334,10 +377,10 @@ export default function Page() {
                 <h3 className="text-4xl font-bold mb-4 text-balance">Your Beauty, Our Passion</h3>
               </div>
               <p className="text-gray-600 leading-relaxed">
-                Ayidaah Beauty is your trusted destination for premium beauty and skincare products. Located in the heart of Rajagiriya, Sri Lanka, we&apos;re dedicated to bringing you the finest selection of cosmetics and skincare essentials.
+                Ayidaah Beauty is your trusted destination for premium beauty and nail art services. Located in the heart of Rajagiriya, Sri Lanka, we&apos;re dedicated to bringing you the finest selection of cosmetics, skincare, and professional nail design services.
               </p>
               <p className="text-gray-600 leading-relaxed">
-                With over a decade of expertise, we carefully curate each product to ensure quality, authenticity, and effectiveness. Our knowledgeable team is always ready to help you find the perfect products for your unique beauty needs.
+                Founded with a passion for beauty and self-expression, we carefully curate each product and service to ensure quality, authenticity, and exceptional results. Our expert team is always ready to help you discover the perfect look for any occasion.
               </p>
               <div className="grid grid-cols-2 gap-6 pt-4">
                 <div className="space-y-2">
@@ -345,8 +388,8 @@ export default function Page() {
                   <p className="text-sm text-gray-600">100% authentic products from trusted brands</p>
                 </div>
                 <div className="space-y-2">
-                  <h4 className="font-semibold text-primary">Expert Support</h4>
-                  <p className="text-sm text-gray-600">Personalized beauty advice from professionals</p>
+                  <h4 className="font-semibold text-primary">Expert Service</h4>
+                  <p className="text-sm text-gray-600">Professional nail art and beauty advice</p>
                 </div>
               </div>
             </div>
