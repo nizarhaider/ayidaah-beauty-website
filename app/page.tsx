@@ -407,7 +407,7 @@ export default function Page() {
           <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
             <div className="relative h-[340px] overflow-hidden rounded-xl shadow-lg sm:h-96 lg:h-[450px]">
               <img
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ayidaah%20image%202-6o2YrNvt26QHcfTwwIMJBsCMN5zP1y.jpg"
+                src="ayidaah-team.jpeg"
                 alt="Ayidaah Beauty Founder with Products"
                 className="w-full h-full object-cover"
               />
