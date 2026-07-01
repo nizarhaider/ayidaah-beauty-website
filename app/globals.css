@@ -123,3 +123,258 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .animate-drop-in {
+    animation: drop-in 520ms ease both;
+  }
+
+  .animate-hero-copy {
+    animation: fade-slide-up 720ms ease both;
+  }
+
+  .animate-hero-media {
+    animation: fade-scale-in 840ms ease 120ms both, gentle-float 6s ease-in-out 1.1s infinite;
+    transform-origin: center;
+  }
+
+  .animate-section {
+    animation: fade-slide-up 640ms ease both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 28%;
+  }
+
+  .delivery-item,
+  .product-card,
+  .review-card,
+  .gallery-tile,
+  .order-detail,
+  .order-form,
+  .about-image,
+  .contact-row,
+  .contact-form {
+    animation: fade-slide-up 600ms ease both;
+  }
+
+  .delivery-item:nth-child(1),
+  .product-card:nth-child(1),
+  .review-card:nth-child(1),
+  .gallery-tile:nth-child(1),
+  .contact-row:nth-child(1) {
+    animation-delay: 80ms;
+  }
+
+  .delivery-item:nth-child(3),
+  .product-card:nth-child(2),
+  .review-card:nth-child(2),
+  .gallery-tile:nth-child(2),
+  .contact-row:nth-child(2) {
+    animation-delay: 150ms;
+  }
+
+  .delivery-item:nth-child(5),
+  .product-card:nth-child(3),
+  .review-card:nth-child(3),
+  .gallery-tile:nth-child(3),
+  .contact-row:nth-child(3) {
+    animation-delay: 220ms;
+  }
+
+  .product-card:nth-child(4),
+  .review-card:nth-child(4),
+  .gallery-tile:nth-child(4) {
+    animation-delay: 290ms;
+  }
+
+  .product-card:nth-child(5),
+  .review-card:nth-child(5) {
+    animation-delay: 360ms;
+  }
+
+  .product-card:nth-child(6),
+  .review-card:nth-child(6) {
+    animation-delay: 430ms;
+  }
+
+  .review-card:nth-child(7) {
+    animation-delay: 500ms;
+  }
+
+  .review-card:nth-child(8) {
+    animation-delay: 570ms;
+  }
+
+  .order-detail:nth-child(2),
+  .order-form,
+  .contact-form {
+    animation-delay: 160ms;
+  }
+
+  .product-card,
+  .review-card,
+  .gallery-tile,
+  .order-detail,
+  .contact-row {
+    transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+  }
+
+  .product-card:hover,
+  .review-card:hover,
+  .gallery-tile:hover,
+  .order-detail:hover,
+  .contact-row:hover {
+    transform: translateY(-4px);
+  }
+
+  .icon-bob {
+    transition: transform 220ms ease;
+  }
+
+  .delivery-item:hover .icon-bob,
+  .order-detail:hover .icon-bob,
+  .contact-row:hover .icon-bob {
+    transform: translateY(-2px) scale(1.06);
+  }
+
+  .product-card button,
+  .order-form button,
+  .contact-form button,
+  .animate-hero-copy a {
+    transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+  }
+
+  .product-card button:hover,
+  .order-form button:hover,
+  .contact-form button:hover,
+  .animate-hero-copy a:hover {
+    transform: translateY(-1px);
+  }
+
+  @keyframes drop-in {
+    from {
+      opacity: 0;
+      transform: translateY(-12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(22px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-scale-in {
+    from {
+      opacity: 0;
+      transform: translateY(18px) scale(0.97);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes gentle-float {
+    0%,
+    100% {
+      transform: translateY(0) scale(1);
+    }
+    50% {
+      transform: translateY(-8px) scale(1.01);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .animate-hero-copy,
+    .animate-section,
+    .delivery-item,
+    .product-card,
+    .review-card,
+    .gallery-tile,
+    .order-detail,
+    .order-form,
+    .about-image,
+    .contact-row,
+    .contact-form {
+      animation-duration: 420ms;
+    }
+
+    .animate-hero-media {
+      animation: fade-scale-in 520ms ease 80ms both;
+    }
+
+    .product-card,
+    .review-card,
+    .gallery-tile,
+    .order-detail,
+    .contact-row {
+      transition-duration: 160ms;
+    }
+
+    @keyframes fade-slide-up {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-drop-in,
+    .animate-hero-copy,
+    .animate-hero-media,
+    .animate-section,
+    .delivery-item,
+    .product-card,
+    .review-card,
+    .gallery-tile,
+    .order-detail,
+    .order-form,
+    .about-image,
+    .contact-row,
+    .contact-form {
+      animation: none;
+    }
+
+    .product-card,
+    .review-card,
+    .gallery-tile,
+    .order-detail,
+    .contact-row,
+    .icon-bob,
+    .product-card button,
+    .order-form button,
+    .contact-form button,
+    .animate-hero-copy a {
+      transition: none;
+    }
+
+    .product-card:hover,
+    .review-card:hover,
+    .gallery-tile:hover,
+    .order-detail:hover,
+    .contact-row:hover,
+    .delivery-item:hover .icon-bob,
+    .order-detail:hover .icon-bob,
+    .contact-row:hover .icon-bob,
+    .product-card button:hover,
+    .order-form button:hover,
+    .contact-form button:hover,
+    .animate-hero-copy a:hover {
+      transform: none;
+    }
+  }
+}

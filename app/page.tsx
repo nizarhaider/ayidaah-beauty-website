@@ -164,7 +164,7 @@ export default function Page() {
   return (
     <main className="min-h-screen overflow-x-hidden bg-background text-foreground">
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-secondary">
+      <nav className="animate-drop-in sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-secondary">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex min-h-16 flex-wrap items-center justify-between gap-3 py-3">
             <h1 className="text-lg font-bold text-primary sm:text-xl">Ayidaah Beauty</h1>
@@ -184,7 +184,7 @@ export default function Page() {
       <section className="relative flex items-center bg-gradient-to-br from-primary/5 via-secondary/10 to-primary/5 py-12 sm:min-h-[calc(100svh-4rem)] sm:py-14 lg:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
-            <div className="mx-auto max-w-xl space-y-5 text-center sm:mx-0 sm:space-y-8 sm:text-left">
+            <div className="animate-hero-copy mx-auto max-w-xl space-y-5 text-center sm:mx-0 sm:space-y-8 sm:text-left">
               <div>
                 <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-primary sm:mb-4 sm:text-sm sm:normal-case sm:tracking-normal">Nails by Ayidaah</p>
                 <h2 className="mb-4 text-3xl font-bold leading-tight text-balance sm:mb-5 sm:text-5xl lg:text-6xl">
@@ -223,7 +223,7 @@ export default function Page() {
               </div>
             </div>
             <div className="relative hidden sm:block">
-              <div className="relative h-[340px] overflow-hidden rounded-xl sm:h-96 lg:h-[500px]">
+              <div className="animate-hero-media relative h-[340px] overflow-hidden rounded-xl sm:h-96 lg:h-[500px]">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20" />
                 <img
                   src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Gemini_Generated_Image_kzcllckzcllckzcl-tAr7RLjl6DNyFhnPjzsFDESDnl51jd.png"
@@ -237,12 +237,12 @@ export default function Page() {
       </section>
 
       {/* Delivery Options */}
-      <section className="py-12 bg-primary/5 border-y border-secondary">
+      <section className="animate-section py-12 bg-primary/5 border-y border-secondary">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row items-center justify-center gap-8">
-            <div className="flex items-center gap-3">
+            <div className="delivery-item flex items-center gap-3">
               <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center">
-                <Truck className="text-primary" size={24} />
+                <Truck className="icon-bob text-primary" size={24} />
               </div>
               <div>
                 <p className="font-semibold text-foreground">Islandwide Delivery</p>
@@ -250,9 +250,9 @@ export default function Page() {
               </div>
             </div>
             <div className="hidden sm:block w-px h-12 bg-secondary" />
-            <div className="flex items-center gap-3">
+            <div className="delivery-item flex items-center gap-3">
               <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center overflow-hidden">
-                <Truck className="text-primary" size={24} />
+                <Truck className="icon-bob text-primary" size={24} />
               </div>
               <div>
                 <p className="font-semibold text-foreground">Delivery Fee</p>
@@ -260,9 +260,9 @@ export default function Page() {
               </div>
             </div>
             <div className="hidden sm:block w-px h-12 bg-secondary" />
-            <div className="flex items-center gap-3">
+            <div className="delivery-item flex items-center gap-3">
               <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center overflow-hidden">
-                <ClipboardCheck className="text-primary" size={24} />
+                <ClipboardCheck className="icon-bob text-primary" size={24} />
               </div>
               <div>
                 <p className="font-semibold text-foreground">Tracking Shared</p>
@@ -274,7 +274,7 @@ export default function Page() {
       </section>
 
       {/* Featured Products */}
-      <section id="featured" className="py-20 bg-white">
+      <section id="featured" className="animate-section py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-10 text-center sm:mb-16">
             <p className="text-sm font-semibold text-primary mb-2">Our Collection</p>
@@ -286,7 +286,7 @@ export default function Page() {
 
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
             {products.map((product) => (
-              <Card key={product.id} className="group overflow-hidden hover:shadow-lg transition-shadow">
+              <Card key={product.id} className="product-card group overflow-hidden hover:shadow-lg transition-shadow">
                 <div className="relative h-64 overflow-hidden bg-secondary/10">
                   <img
                     src={product.image}
@@ -348,7 +348,7 @@ export default function Page() {
       </section>
 
       {/* Order Section */}
-      <section id="order" className="py-16 bg-primary/5 sm:py-20">
+      <section id="order" className="animate-section py-16 bg-primary/5 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
             <div className="space-y-5">
@@ -358,15 +358,15 @@ export default function Page() {
                 Add your name, contact number, delivery address, and selected item. Your order details will open directly in WhatsApp for confirmation.
               </p>
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
-                <div className="flex gap-4 rounded-lg bg-white p-4 shadow-sm">
-                  <ClipboardCheck className="mt-1 shrink-0 text-primary" size={22} />
+                <div className="order-detail flex gap-4 rounded-lg bg-white p-4 shadow-sm">
+                  <ClipboardCheck className="icon-bob mt-1 shrink-0 text-primary" size={22} />
                   <div>
                     <p className="font-semibold">Delivery and tracking</p>
                     <p className="text-sm text-gray-600">Orders are shipped within 1-2 days, and tracking is shared after dispatch.</p>
                   </div>
                 </div>
-                <div className="flex gap-4 rounded-lg bg-white p-4 shadow-sm">
-                  <Truck className="mt-1 shrink-0 text-primary" size={22} />
+                <div className="order-detail flex gap-4 rounded-lg bg-white p-4 shadow-sm">
+                  <Truck className="icon-bob mt-1 shrink-0 text-primary" size={22} />
                   <div>
                     <p className="font-semibold">Delivery charge</p>
                     <p className="text-sm text-gray-600">Rs. {DELIVERY_FEE} is added to every confirmed order.</p>
@@ -375,7 +375,7 @@ export default function Page() {
               </div>
             </div>
 
-            <form onSubmit={handleOrderSubmit} className="rounded-xl bg-white p-5 shadow-sm sm:p-6">
+            <form onSubmit={handleOrderSubmit} className="order-form rounded-xl bg-white p-5 shadow-sm sm:p-6">
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="sm:col-span-2">
                   <label htmlFor="order-product" className="block text-sm font-medium mb-2">Item</label>
@@ -450,7 +450,7 @@ export default function Page() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-16 bg-white sm:py-20">
+      <section className="animate-section py-16 bg-white sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-10 text-center sm:mb-16">
             <p className="text-sm font-semibold text-primary mb-2">Customer Love</p>
@@ -462,7 +462,7 @@ export default function Page() {
 
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {reviews.map((review) => (
-              <Card key={review.name} className="flex h-full flex-col p-5 transition-shadow hover:shadow-lg sm:p-6">
+              <Card key={review.name} className="review-card flex h-full flex-col p-5 transition-shadow hover:shadow-lg sm:p-6">
                 <div className="mb-3 flex items-center gap-1">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} size={16} className="fill-yellow-400 text-yellow-400" />
@@ -493,7 +493,7 @@ export default function Page() {
       </section>
 
       {/* Gallery Section */}
-      <section className="py-20 bg-white">
+      <section className="animate-section py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-10 text-center sm:mb-16">
             <p className="text-sm font-semibold text-primary mb-2">Our Portfolio</p>
@@ -505,7 +505,7 @@ export default function Page() {
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {['/updates/Coffin%20Nude%20Lux.jpeg', '/updates/Mini%20Almond%20pink%20French%20tip.jpeg', '/nail-art-3.jpg', '/nail-art-4.jpg'].map((image, index) => (
-              <div key={index} className="group relative h-64 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow">
+              <div key={index} className="gallery-tile group relative h-64 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow">
                 <img
                   src={image}
                   alt={`Nail art design ${index + 1}`}
@@ -523,10 +523,10 @@ export default function Page() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 bg-gradient-to-br from-primary/5 via-secondary/10 to-primary/5">
+      <section id="about" className="animate-section py-20 bg-gradient-to-br from-primary/5 via-secondary/10 to-primary/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
-            <div className="relative h-[340px] overflow-hidden rounded-xl shadow-lg sm:h-96 lg:h-[450px]">
+            <div className="about-image relative h-[340px] overflow-hidden rounded-xl shadow-lg sm:h-96 lg:h-[450px]">
               <img
                 src="ayidaah-team.jpeg"
                 alt="Ayidaah Beauty Founder with Products"
@@ -561,7 +561,7 @@ export default function Page() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 bg-white">
+      <section id="contact" className="animate-section py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-10 text-center sm:mb-16">
             <p className="text-sm font-semibold text-primary mb-2">Get In Touch</p>
@@ -573,7 +573,7 @@ export default function Page() {
               <div>
                 <h4 className="font-bold text-xl mb-6">Contact Information</h4>
                 <div className="space-y-6">
-                  <div className="flex gap-4 items-start">
+                  <div className="contact-row flex gap-4 items-start">
                     <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
                       <MapPin className="text-primary" size={24} />
                     </div>
@@ -583,7 +583,7 @@ export default function Page() {
                     </div>
                   </div>
 
-                  <div className="flex gap-4 items-start">
+                  <div className="contact-row flex gap-4 items-start">
                     <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
                       <Phone className="text-primary" size={24} />
                     </div>
@@ -593,7 +593,7 @@ export default function Page() {
                     </div>
                   </div>
 
-                  <div className="flex gap-4 items-start">
+                  <div className="contact-row flex gap-4 items-start">
                     <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
                       <Mail className="text-primary" size={24} />
                     </div>
@@ -615,7 +615,7 @@ export default function Page() {
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-primary/5 to-secondary/10 rounded-2xl p-8 space-y-6">
+            <div className="contact-form bg-gradient-to-br from-primary/5 to-secondary/10 rounded-2xl p-8 space-y-6">
               <h4 className="font-bold text-xl">Send us a Message</h4>
               <form className="space-y-4">
                 <div>
