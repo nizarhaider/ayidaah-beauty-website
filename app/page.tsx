@@ -181,16 +181,27 @@ export default function Page() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative flex items-center bg-gradient-to-br from-primary/5 via-secondary/10 to-primary/5 py-12 sm:min-h-[calc(100svh-4rem)] sm:py-14 lg:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+      <section className="relative flex min-h-[calc(100svh-4rem)] items-center overflow-hidden bg-gradient-to-br from-primary/5 via-secondary/10 to-primary/5 py-12 sm:py-14 lg:py-20">
+        <video
+          className="animate-hero-mobile-video absolute inset-0 h-full w-full object-cover sm:hidden"
+          src="/updates/WhatsApp%20Video%202026-07-01%20at%2011.06.51.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-label="Ayidaah press-on nails preview video"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/35 to-black/20 sm:hidden" />
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
             <div className="animate-hero-copy mx-auto max-w-xl space-y-5 text-center sm:mx-0 sm:space-y-8 sm:text-left">
               <div>
-                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-primary sm:mb-4 sm:text-sm sm:normal-case sm:tracking-normal">Nails by Ayidaah</p>
-                <h2 className="mb-4 text-3xl font-bold leading-tight text-balance sm:mb-5 sm:text-5xl lg:text-6xl">
-                  Beauty, <span className="text-primary">perfectly crafted</span>
+                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-white/90 sm:mb-4 sm:text-sm sm:normal-case sm:tracking-normal sm:text-primary">Nails by Ayidaah</p>
+                <h2 className="mb-4 text-4xl font-bold leading-tight text-balance text-white sm:mb-5 sm:text-5xl sm:text-foreground lg:text-6xl">
+                  Beauty, <span className="text-white sm:text-primary">perfectly crafted</span>
                 </h2>
-                <p className="mx-auto mb-6 max-w-sm text-sm leading-relaxed text-gray-600 sm:mx-0 sm:mb-7 sm:max-w-xl sm:text-lg">
+                <p className="mx-auto mb-6 max-w-sm text-sm leading-relaxed text-white/90 sm:mx-0 sm:mb-7 sm:max-w-xl sm:text-lg sm:text-gray-600">
                   <span className="sm:hidden">Premium press-on nails, lip tints, and lashes with islandwide delivery.</span>
                   <span className="hidden sm:inline">Discover premium press-on nails, lip tints, lashes, and beauty essentials from Ayidaah. Order online, send your details through WhatsApp, and receive tracking once your package is shipped.</span>
                 </p>
@@ -207,22 +218,9 @@ export default function Page() {
                   </a>
                 </Button>
               </div>
-              <div className="mx-auto flex w-fit items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-medium text-gray-600 shadow-sm sm:hidden">
+              <div className="mx-auto flex w-fit items-center gap-2 rounded-full bg-white/95 px-4 py-2 text-sm font-medium text-gray-700 shadow-sm sm:hidden">
                 <Star size={15} className="fill-yellow-400 text-yellow-400" />
                 <span>4.8 Google rating · Rajagiriya</span>
-              </div>
-              <div className="animate-hero-mobile-video relative mx-auto aspect-[9/16] w-full max-w-[280px] overflow-hidden rounded-xl shadow-lg sm:hidden">
-                <video
-                  className="h-full w-full object-cover"
-                  src="/updates/WhatsApp%20Video%202026-07-01%20at%2011.06.51.mp4"
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  preload="metadata"
-                  aria-label="Ayidaah press-on nails preview video"
-                />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
               </div>
               <div className="hidden gap-6 pt-2 sm:flex sm:gap-8 sm:pt-4">
                 <div>
