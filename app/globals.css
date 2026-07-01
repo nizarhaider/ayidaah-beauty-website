@@ -138,6 +138,11 @@
     transform-origin: center;
   }
 
+  .animate-hero-mobile-video {
+    animation: fade-scale-in 560ms ease 180ms both;
+    transform-origin: center;
+  }
+
   .animate-section {
     animation: fade-slide-up 640ms ease both;
     animation-timeline: view();
@@ -295,6 +300,7 @@
 
   @media (max-width: 640px) {
     .animate-hero-copy,
+    .animate-hero-mobile-video,
     .animate-section,
     .delivery-item,
     .product-card,
@@ -310,6 +316,10 @@
 
     .animate-hero-media {
       animation: fade-scale-in 520ms ease 80ms both;
+    }
+
+    .animate-hero-mobile-video {
+      animation-duration: 520ms;
     }
 
     .product-card,
@@ -336,6 +346,7 @@
     .animate-drop-in,
     .animate-hero-copy,
     .animate-hero-media,
+    .animate-hero-mobile-video,
     .animate-section,
     .delivery-item,
     .product-card,

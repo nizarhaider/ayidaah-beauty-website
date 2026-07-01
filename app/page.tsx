@@ -211,6 +211,19 @@ export default function Page() {
                 <Star size={15} className="fill-yellow-400 text-yellow-400" />
                 <span>4.8 Google rating · Rajagiriya</span>
               </div>
+              <div className="animate-hero-mobile-video relative mx-auto aspect-[9/16] w-full max-w-[280px] overflow-hidden rounded-xl shadow-lg sm:hidden">
+                <video
+                  className="h-full w-full object-cover"
+                  src="/updates/WhatsApp%20Video%202026-07-01%20at%2011.06.51.mp4"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  aria-label="Ayidaah press-on nails preview video"
+                />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+              </div>
               <div className="hidden gap-6 pt-2 sm:flex sm:gap-8 sm:pt-4">
                 <div>
                   <p className="text-2xl font-bold text-primary">4.8</p>
