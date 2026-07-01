@@ -1,65 +1,66 @@
 'use client'
 
-import { useState } from 'react'
-import { Heart, MapPin, Phone, Mail, Instagram, Star, Truck } from 'lucide-react'
+import { type FormEvent, useState } from 'react'
+import { Heart, MapPin, Phone, Mail, Instagram, Star, Truck, ClipboardCheck } from 'lucide-react'
 import { FloatingWhatsApp } from 'react-floating-whatsapp'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 
 const WHATSAPP_NUMBER = '94771679595'
 const DISPLAY_PHONE = '+94 77 167 9595'
+const DELIVERY_FEE = 499
 
 const products = [
   {
     id: '1',
-    name: 'Classic Gel Manicure',
+    name: 'Coffin Nude Lux',
     price: 'Rs. 2,500',
-    category: 'Nail Service',
+    category: 'Press-on Nails - Size S',
     rating: 5,
     reviews: 9,
-    image: '/nail-art-1.jpg'
+    image: '/updates/Coffin%20Nude%20Lux.jpeg'
   },
   {
     id: '2',
-    name: 'Premium Nail Art Design',
+    name: 'Mini Almond Pink French Tip',
     price: 'Rs. 3,500',
-    category: 'Nail Art',
+    category: 'Press-on Nails - Size S',
     rating: 5,
     reviews: 9,
-    image: '/nail-art-2.jpg'
+    image: '/updates/Mini%20Almond%20pink%20French%20tip.jpeg'
   },
   {
     id: '3',
-    name: 'Ombre Gradient Design',
-    price: 'Rs. 3,000',
-    category: 'Nail Art',
+    name: 'Custom Press-on Nail Set',
+    price: 'From Rs. 3,000',
+    category: 'Custom Nails',
     rating: 5,
     reviews: 9,
     image: '/nail-art-3.jpg'
   },
   {
     id: '4',
-    name: 'Chrome & Glitter Nails',
-    price: 'Rs. 3,800',
-    category: 'Premium Art',
+    name: 'Ayidaah Lip Tint',
+    price: 'Ask for shades',
+    category: 'Lip Tints',
     rating: 5,
     reviews: 9,
-    image: '/nail-art-4.jpg'
+    image: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500&h=500&fit=crop'
   },
   {
     id: '5',
-    name: 'Bridal Nail Package',
-    price: 'Rs. 5,500',
-    category: 'Special Service',
+    name: 'Lash Collection',
+    price: 'Ask for styles',
+    category: 'Lashes',
     rating: 5,
     reviews: 9,
-    image: 'https://images.unsplash.com/photo-1604654894610-df63bc536371?w=500&h=500&fit=crop'
+    image: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=500&h=500&fit=crop'
   },
   {
     id: '6',
-    name: 'Pedicure & Nail Care',
-    price: 'Rs. 2,800',
-    category: 'Nail Service',
+    name: 'Nail Care Add-ons',
+    price: 'Ask for options',
+    category: 'Accessories',
     rating: 5,
     reviews: 9,
     image: 'https://images.unsplash.com/photo-1604654894610-df63bc536371?w=500&h=500&fit=crop'
@@ -122,6 +123,13 @@ const reviews = [
 
 export default function Page() {
   const [favorites, setFavorites] = useState<Record<string, boolean>>({})
+  const [order, setOrder] = useState({
+    product: products[0].name,
+    name: '',
+    phone: '',
+    address: '',
+    notes: ''
+  })
 
   const toggleFavorite = (id: string) => {
     setFavorites(prev => ({
@@ -130,8 +138,25 @@ export default function Page() {
     }))
   }
 
-  const handleWhatsAppInquiry = (productName: string) => {
-    const message = `Hi! I'm interested in ${productName}. Can you provide more details?`
+  const handleProductSelect = (productName: string) => {
+    setOrder(prev => ({ ...prev, product: productName }))
+    document.getElementById('order')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
+  const handleOrderSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const message = [
+      'Hi Ayidaah Beauty, I would like to confirm this order.',
+      '',
+      `Item: ${order.product}`,
+      `Name: ${order.name}`,
+      `Contact number: ${order.phone}`,
+      `Delivery address: ${order.address}`,
+      `Delivery charge: Rs. ${DELIVERY_FEE}`,
+      order.notes ? `Notes: ${order.notes}` : '',
+      '',
+      'Please confirm availability and share tracking once shipped.'
+    ].filter(Boolean).join('\n')
     const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
     window.open(whatsappUrl, '_blank')
   }
@@ -147,7 +172,9 @@ export default function Page() {
               <a href="#featured" className="text-sm font-medium hover:text-primary transition">Products</a>
               <a href="#about" className="text-sm font-medium hover:text-primary transition">About</a>
               <a href="#contact" className="text-sm font-medium hover:text-primary transition">Contact</a>
-              <Button size="sm" className="bg-primary hover:bg-primary/90">Shop Now</Button>
+              <Button size="sm" className="bg-primary hover:bg-primary/90" asChild>
+                <a href="#order">Shop Now</a>
+              </Button>
             </div>
           </div>
         </div>
@@ -164,19 +191,19 @@ export default function Page() {
                   Beauty, <span className="text-primary">perfectly crafted</span>
                 </h2>
                 <p className="mx-auto mb-6 max-w-sm text-sm leading-relaxed text-gray-600 sm:mx-0 sm:mb-7 sm:max-w-xl sm:text-lg">
-                  <span className="sm:hidden">Premium press-on nails and beauty services in Rajagiriya.</span>
-                  <span className="hidden sm:inline">Discover our curated collection of premium beauty products designed to enhance your natural glow. From nail art to lipsticks, find everything you need at our Rajagiriya store.</span>
+                  <span className="sm:hidden">Premium press-on nails, lip tints, and lashes with islandwide delivery.</span>
+                  <span className="hidden sm:inline">Discover premium press-on nails, lip tints, lashes, and beauty essentials from Ayidaah. Order online, send your details through WhatsApp, and receive tracking once your package is shipped.</span>
                 </p>
               </div>
               <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
                 <Button size="lg" className="w-full bg-primary hover:bg-primary/90 text-white sm:w-auto" asChild>
                   <a href="#featured">
-                  Explore Collection
+                    Order Now
                   </a>
                 </Button>
                 <Button size="lg" variant="outline" className="hidden border-primary text-primary hover:bg-primary/10 sm:inline-flex" asChild>
                   <a href="#contact">
-                  Visit Store
+                    View Details
                   </a>
                 </Button>
               </div>
@@ -190,8 +217,8 @@ export default function Page() {
                   <p className="text-sm text-gray-600">Google Rating</p>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-primary">15 min</p>
-                  <p className="text-sm text-gray-600">Fast Sets</p>
+                  <p className="text-2xl font-bold text-primary">1-2 days</p>
+                  <p className="text-sm text-gray-600">Tracked Delivery</p>
                 </div>
               </div>
             </div>
@@ -218,36 +245,28 @@ export default function Page() {
                 <Truck className="text-primary" size={24} />
               </div>
               <div>
-                <p className="font-semibold text-foreground">Fast Delivery</p>
-                <p className="text-sm text-gray-600">Available Now</p>
+                <p className="font-semibold text-foreground">Islandwide Delivery</p>
+                <p className="text-sm text-gray-600">Ships within 1-2 days</p>
               </div>
             </div>
             <div className="hidden sm:block w-px h-12 bg-secondary" />
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center overflow-hidden">
-                <img
-                  src="/uber-logo.png"
-                  alt="Uber Eats"
-                  className="h-9 w-9 object-contain"
-                />
+                <Truck className="text-primary" size={24} />
               </div>
               <div>
-                <p className="font-semibold text-foreground">Uber Eats</p>
-                <p className="text-sm text-gray-600">Order & Deliver</p>
+                <p className="font-semibold text-foreground">Delivery Fee</p>
+                <p className="text-sm text-gray-600">Rs. {DELIVERY_FEE} per order</p>
               </div>
             </div>
             <div className="hidden sm:block w-px h-12 bg-secondary" />
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center overflow-hidden">
-                <img
-                  src="/pickme-logo.png"
-                  alt="PickMe Food"
-                  className="h-9 w-9 object-contain"
-                />
+                <ClipboardCheck className="text-primary" size={24} />
               </div>
               <div>
-                <p className="font-semibold text-foreground">PickMe Food</p>
-                <p className="text-sm text-gray-600">Easy Ordering</p>
+                <p className="font-semibold text-foreground">Tracking Shared</p>
+                <p className="text-sm text-gray-600">After dispatch</p>
               </div>
             </div>
           </div>
@@ -261,7 +280,7 @@ export default function Page() {
             <p className="text-sm font-semibold text-primary mb-2">Our Collection</p>
             <h3 className="mb-4 text-3xl font-bold text-balance sm:text-4xl lg:text-5xl">Featured Products</h3>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Handpicked beauty essentials to elevate your routine and showcase your best self.
+              Press-on nails, lip tints, lashes, and beauty essentials ready to order through WhatsApp.
             </p>
           </div>
 
@@ -308,9 +327,9 @@ export default function Page() {
                     <Button 
                       size="sm" 
                       className="w-full bg-primary hover:bg-primary/90 sm:w-auto"
-                      onClick={() => handleWhatsAppInquiry(product.name)}
+                      onClick={() => handleProductSelect(product.name)}
                     >
-                      Inquire Now
+                      Order Now
                     </Button>
                   </div>
                 </div>
@@ -320,10 +339,112 @@ export default function Page() {
 
           <div className="text-center mt-12">
             <Button size="lg" className="bg-primary hover:bg-primary/90 text-white" asChild>
-              <a href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi! I'd like to see all Ayidaah products.")}`} target="_blank" rel="noopener noreferrer">
-              View All Products
+              <a href="#order">
+                View All Products
               </a>
             </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Order Section */}
+      <section id="order" className="py-16 bg-primary/5 sm:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+            <div className="space-y-5">
+              <p className="text-sm font-semibold text-primary">Order Details</p>
+              <h3 className="text-3xl font-bold text-balance sm:text-4xl">Confirm your order on WhatsApp</h3>
+              <p className="text-gray-600 leading-relaxed">
+                Add your name, contact number, delivery address, and selected item. Your order details will open directly in WhatsApp for confirmation.
+              </p>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+                <div className="flex gap-4 rounded-lg bg-white p-4 shadow-sm">
+                  <ClipboardCheck className="mt-1 shrink-0 text-primary" size={22} />
+                  <div>
+                    <p className="font-semibold">Delivery and tracking</p>
+                    <p className="text-sm text-gray-600">Orders are shipped within 1-2 days, and tracking is shared after dispatch.</p>
+                  </div>
+                </div>
+                <div className="flex gap-4 rounded-lg bg-white p-4 shadow-sm">
+                  <Truck className="mt-1 shrink-0 text-primary" size={22} />
+                  <div>
+                    <p className="font-semibold">Delivery charge</p>
+                    <p className="text-sm text-gray-600">Rs. {DELIVERY_FEE} is added to every confirmed order.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <form onSubmit={handleOrderSubmit} className="rounded-xl bg-white p-5 shadow-sm sm:p-6">
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="sm:col-span-2">
+                  <label htmlFor="order-product" className="block text-sm font-medium mb-2">Item</label>
+                  <select
+                    id="order-product"
+                    value={order.product}
+                    onChange={(event) => setOrder(prev => ({ ...prev, product: event.target.value }))}
+                    className="w-full px-4 py-2 rounded-lg border border-secondary focus:outline-none focus:ring-2 focus:ring-primary/50 bg-white"
+                  >
+                    {products.map((product) => (
+                      <option key={product.id} value={product.name}>{product.name}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="order-name" className="block text-sm font-medium mb-2">Name</label>
+                  <input
+                    id="order-name"
+                    required
+                    type="text"
+                    value={order.name}
+                    onChange={(event) => setOrder(prev => ({ ...prev, name: event.target.value }))}
+                    placeholder="Your name"
+                    className="w-full px-4 py-2 rounded-lg border border-secondary focus:outline-none focus:ring-2 focus:ring-primary/50 bg-white"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="order-phone" className="block text-sm font-medium mb-2">Contact number</label>
+                  <input
+                    id="order-phone"
+                    required
+                    type="tel"
+                    value={order.phone}
+                    onChange={(event) => setOrder(prev => ({ ...prev, phone: event.target.value }))}
+                    placeholder="07X XXX XXXX"
+                    className="w-full px-4 py-2 rounded-lg border border-secondary focus:outline-none focus:ring-2 focus:ring-primary/50 bg-white"
+                  />
+                </div>
+                <div className="sm:col-span-2">
+                  <label htmlFor="order-address" className="block text-sm font-medium mb-2">Delivery address</label>
+                  <textarea
+                    id="order-address"
+                    required
+                    value={order.address}
+                    onChange={(event) => setOrder(prev => ({ ...prev, address: event.target.value }))}
+                    placeholder="Street, city, postal code"
+                    rows={3}
+                    className="w-full px-4 py-2 rounded-lg border border-secondary focus:outline-none focus:ring-2 focus:ring-primary/50 bg-white resize-none"
+                  />
+                </div>
+                <div className="sm:col-span-2">
+                  <label htmlFor="order-notes" className="block text-sm font-medium mb-2">Notes</label>
+                  <textarea
+                    id="order-notes"
+                    value={order.notes}
+                    onChange={(event) => setOrder(prev => ({ ...prev, notes: event.target.value }))}
+                    placeholder="Shade, size, quantity, or any extra details"
+                    rows={3}
+                    className="w-full px-4 py-2 rounded-lg border border-secondary focus:outline-none focus:ring-2 focus:ring-primary/50 bg-white resize-none"
+                  />
+                </div>
+              </div>
+              <div className="mt-5 flex flex-col gap-3 border-t border-secondary pt-4 sm:flex-row sm:items-center sm:justify-between">
+                <p className="text-sm text-gray-600">Delivery: Rs. {DELIVERY_FEE} - Ships in 1-2 days</p>
+                <Button type="submit" className="bg-primary hover:bg-primary/90 text-white">
+                  Confirm on WhatsApp
+                </Button>
+              </div>
+            </form>
           </div>
         </div>
       </section>
@@ -383,7 +504,7 @@ export default function Page() {
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {['/nail-art-1.jpg', '/nail-art-2.jpg', '/nail-art-3.jpg', '/nail-art-4.jpg'].map((image, index) => (
+            {['/updates/Coffin%20Nude%20Lux.jpeg', '/updates/Mini%20Almond%20pink%20French%20tip.jpeg', '/nail-art-3.jpg', '/nail-art-4.jpg'].map((image, index) => (
               <div key={index} className="group relative h-64 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow">
                 <img
                   src={image}
@@ -419,19 +540,19 @@ export default function Page() {
                 <h3 className="mb-4 text-3xl font-bold text-balance sm:text-4xl">Your Beauty, Our Passion</h3>
               </div>
               <p className="text-gray-600 leading-relaxed">
-                Ayidaah Beauty is your trusted destination for premium beauty and nail art services. Located in the heart of Rajagiriya, Sri Lanka, we&apos;re dedicated to bringing you the finest selection of cosmetics, skincare, and professional nail design services.
+                Ayidaah Beauty is your trusted destination for premium press-on nails, lip tints, lashes, and beauty essentials. Located in Rajagiriya, Sri Lanka, we&apos;re dedicated to bringing you quality products with a simple WhatsApp ordering experience.
               </p>
               <p className="text-gray-600 leading-relaxed">
-                Founded with a passion for beauty and self-expression, we carefully curate each product and service to ensure quality, authenticity, and exceptional results. Our expert team is always ready to help you discover the perfect look for any occasion.
+                Founded with a passion for beauty and self-expression, we carefully curate each product to ensure quality, authenticity, and exceptional results. Our team is always ready to help you confirm the perfect item, delivery details, and tracking for your order.
               </p>
               <div className="grid gap-5 pt-4 sm:grid-cols-2 sm:gap-6">
                 <div className="space-y-2">
                   <h4 className="font-semibold text-primary">Quality Guaranteed</h4>
-                  <p className="text-sm text-gray-600">100% authentic products from trusted brands</p>
+                  <p className="text-sm text-gray-600">Curated nails, lip tints, lashes, and beauty essentials</p>
                 </div>
                 <div className="space-y-2">
                   <h4 className="font-semibold text-primary">Expert Service</h4>
-                  <p className="text-sm text-gray-600">Professional nail art and beauty advice</p>
+                  <p className="text-sm text-gray-600">WhatsApp order confirmation with delivery tracking</p>
                 </div>
               </div>
             </div>
@@ -524,9 +645,9 @@ export default function Page() {
                     className="w-full px-4 py-2 rounded-lg border border-secondary focus:outline-none focus:ring-2 focus:ring-primary/50 bg-white resize-none"
                   />
                 </div>
-                <Button className="w-full bg-primary hover:bg-primary/90 text-white" asChild>
-                  <a href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi! I'd like to contact Ayidaah Beauty.")}`} target="_blank" rel="noopener noreferrer">
-                  Send Message
+                <Button className="w-full bg-primary hover:bg-primary/90 text-white" type="button" asChild>
+                  <a href="#order">
+                  Place an Order
                   </a>
                 </Button>
               </form>
@@ -541,14 +662,14 @@ export default function Page() {
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
               <h3 className="font-bold mb-4">Ayidaah Beauty</h3>
-              <p className="text-sm text-gray-300">Premium beauty products for the modern you.</p>
+              <p className="text-sm text-gray-300">Press-on nails, lip tints, lashes, and beauty essentials.</p>
             </div>
             <div>
               <h5 className="font-semibold mb-4">Shop</h5>
               <ul className="space-y-2 text-sm text-gray-300">
-                <li><a href="#" className="hover:text-primary transition">All Products</a></li>
-                <li><a href="#" className="hover:text-primary transition">Skincare</a></li>
-                <li><a href="#" className="hover:text-primary transition">Makeup</a></li>
+                <li><a href="#featured" className="hover:text-primary transition">All Products</a></li>
+                <li><a href="#featured" className="hover:text-primary transition">Lip Tints</a></li>
+                <li><a href="#featured" className="hover:text-primary transition">Lashes</a></li>
               </ul>
             </div>
             <div>
@@ -568,7 +689,7 @@ export default function Page() {
             </div>
           </div>
           <div className="border-t border-gray-700 pt-8 text-center text-sm text-gray-400">
-            <p>&copy; 2024 Ayidaah Beauty. All rights reserved. Rajagiriya, Sri Lanka</p>
+            <p>&copy; 2026 Ayidaah Beauty. All rights reserved. Rajagiriya, Sri Lanka</p>
           </div>
         </div>
       </footer>
