@@ -6,9 +6,12 @@ import './globals.css'
 const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.URL || 'http://localhost:3000'
+
 export const metadata: Metadata = {
   title: 'Ayidaah Beauty - Rajagiriya, Sri Lanka',
-  description: 'Discover premium beauty products at Ayidaah Beauty. Located in Rajagiriya, Sri Lanka. Your trusted destination for quality beauty and skincare.',
+  description: 'Shop press-on nails, lip tints, lashes, and beauty essentials from Ayidaah Beauty in Rajagiriya, Sri Lanka.',
+  metadataBase: new URL(siteUrl),
   generator: 'v0.app',
   icons: {
     icon: [
@@ -26,6 +29,28 @@ export const metadata: Metadata = {
       },
     ],
     apple: '/apple-icon.png',
+  },
+  openGraph: {
+    title: 'Ayidaah Beauty - Rajagiriya, Sri Lanka',
+    description: 'Shop press-on nails, lip tints, lashes, and beauty essentials from Ayidaah Beauty.',
+    url: '/',
+    siteName: 'Ayidaah Beauty',
+    images: [
+      {
+        url: '/ayidaah-logo.png',
+        width: 1024,
+        height: 1024,
+        alt: 'Ayidaah Beauty logo',
+      },
+    ],
+    locale: 'en_LK',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Ayidaah Beauty - Rajagiriya, Sri Lanka',
+    description: 'Shop press-on nails, lip tints, lashes, and beauty essentials from Ayidaah Beauty.',
+    images: ['/ayidaah-logo.png'],
   },
 }
 
