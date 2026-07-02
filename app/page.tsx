@@ -15,55 +15,64 @@ const products = [
     id: '1',
     name: 'Coffin Nude Lux',
     price: 'Rs. 2,500',
-    category: 'Press-on Nails - Size S',
+    category: 'Press-on Nails - 15pcs included',
     rating: 5,
     reviews: 9,
-    image: '/updates/Coffin%20Nude%20Lux.jpeg'
+    image: '/products/coffin-nude-lux.jpeg'
   },
   {
     id: '2',
     name: 'Mini Almond Pink French Tip',
     price: 'Rs. 3,500',
-    category: 'Press-on Nails - Size S',
+    category: 'Press-on Nails - 15pcs included',
     rating: 5,
     reviews: 9,
-    image: '/updates/Mini%20Almond%20pink%20French%20tip.jpeg'
+    image: '/products/mini-almond-pink-french-tip.jpeg'
   },
   {
     id: '3',
-    name: 'Custom Press-on Nail Set',
-    price: 'From Rs. 3,000',
-    category: 'Custom Nails',
+    name: 'Brown Universal Colour Tint',
+    price: 'Ask for shades',
+    category: 'Lip Tint',
     rating: 5,
     reviews: 9,
-    image: '/nail-art-3.jpg'
+    image: '/products/brown-universal-colour-tint-packaging.jpeg'
   },
   {
     id: '4',
-    name: 'Ayidaah Lip Tint',
-    price: 'Ask for shades',
-    category: 'Lip Tints',
-    rating: 5,
-    reviews: 9,
-    image: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500&h=500&fit=crop'
-  },
-  {
-    id: '5',
-    name: 'Lash Collection',
+    name: 'Ceylon Goddess Lashes',
     price: 'Ask for styles',
     category: 'Lashes',
     rating: 5,
     reviews: 9,
-    image: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=500&h=500&fit=crop'
+    image: '/products/ceylon-goddess-lashes.jpeg'
+  },
+  {
+    id: '5',
+    name: 'Colombo Chic Lashes',
+    price: 'Ask for styles',
+    category: 'Lashes - Best seller',
+    rating: 5,
+    reviews: 9,
+    image: '/products/colombo-chic-lashes.jpeg'
   },
   {
     id: '6',
-    name: 'Nail Care Add-ons',
-    price: 'Ask for options',
-    category: 'Accessories',
+    name: 'Island Queen Lashes',
+    price: 'Ask for styles',
+    category: 'Lashes',
     rating: 5,
     reviews: 9,
-    image: 'https://images.unsplash.com/photo-1604654894610-df63bc536371?w=500&h=500&fit=crop'
+    image: '/products/island-queen-lashes.jpeg'
+  },
+  {
+    id: '7',
+    name: 'Lankan Empress Lashes',
+    price: 'Ask for styles',
+    category: 'Lashes',
+    rating: 5,
+    reviews: 9,
+    image: '/products/lankan-empress-lashes.jpeg'
   }
 ]
 
@@ -184,7 +193,7 @@ export default function Page() {
       <section className="relative flex min-h-[calc(100svh-4rem)] items-center overflow-hidden bg-gradient-to-br from-primary/5 via-secondary/10 to-primary/5 py-12 sm:py-14 lg:py-20">
         <video
           className="animate-hero-mobile-video absolute inset-0 h-full w-full object-cover sm:hidden"
-          src="/updates/WhatsApp%20Video%202026-07-01%20at%2011.06.51.mp4"
+          src="/products/mobile-hero-nails.mp4"
           autoPlay
           muted
           loop
@@ -291,7 +300,7 @@ export default function Page() {
             <p className="text-sm font-semibold text-primary mb-2">Our Collection</p>
             <h3 className="mb-4 text-3xl font-bold text-balance sm:text-4xl lg:text-5xl">Featured Products</h3>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Press-on nails, lip tints, lashes, and beauty essentials ready to order through WhatsApp.
+              Press-on nails, lip tints, and lashes ready to order through WhatsApp. All press-on nail sets include 15pcs, so no size selection is needed.
             </p>
           </div>
 
@@ -443,7 +452,7 @@ export default function Page() {
                     id="order-notes"
                     value={order.notes}
                     onChange={(event) => setOrder(prev => ({ ...prev, notes: event.target.value }))}
-                    placeholder="Shade, size, quantity, or any extra details"
+                    placeholder="Shade, style, quantity, or any extra details"
                     rows={3}
                     className="w-full px-4 py-2 rounded-lg border border-secondary focus:outline-none focus:ring-2 focus:ring-primary/50 bg-white resize-none"
                   />
@@ -508,14 +517,23 @@ export default function Page() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-10 text-center sm:mb-16">
             <p className="text-sm font-semibold text-primary mb-2">Our Portfolio</p>
-            <h3 className="mb-4 text-3xl font-bold text-balance sm:text-4xl lg:text-5xl">Nail Art Masterpieces</h3>
+            <h3 className="mb-4 text-3xl font-bold text-balance sm:text-4xl lg:text-5xl">Beauty Highlights</h3>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Showcasing our latest and most stunning nail art designs. Every design is a unique creation tailored to our clients&apos; preferences.
+              Explore our latest press-on nails, lip tints, and lash styles.
             </p>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {['/updates/Coffin%20Nude%20Lux.jpeg', '/updates/Mini%20Almond%20pink%20French%20tip.jpeg', '/nail-art-3.jpg', '/nail-art-4.jpg'].map((image, index) => (
+            {[
+              '/products/coffin-nude-lux.jpeg',
+              '/products/mini-almond-pink-french-tip.jpeg',
+              '/products/brown-universal-colour-tint.jpeg',
+              '/products/brown-universal-colour-tint-results.jpeg',
+              '/products/ceylon-goddess-lashes.jpeg',
+              '/products/colombo-chic-lashes.jpeg',
+              '/products/island-queen-lashes.jpeg',
+              '/products/lankan-empress-lashes.jpeg'
+            ].map((image, index) => (
               <div key={index} className="gallery-tile group relative h-64 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow">
                 <img
                   src={image}
