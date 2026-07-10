@@ -1,18 +1,12 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
-import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
-
-const _geist = Geist({ subsets: ["latin"] });
-const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.URL || 'http://localhost:3000'
 
 export const metadata: Metadata = {
-  title: 'Ayidaah Beauty - Rajagiriya, Sri Lanka',
-  description: 'Shop press-on nails, lip tints, lashes, and beauty essentials from Ayidaah Beauty in Rajagiriya, Sri Lanka.',
+  title: 'Ayidaah Beauty | Press-On Nails, Lashes & Tints in Sri Lanka',
+  description: 'Shop expressive press-on nails, lashes, colour tints and beauty essentials from Ayidaah Beauty in Rajagiriya, with islandwide delivery in Sri Lanka.',
   metadataBase: new URL(siteUrl),
-  generator: 'v0.app',
   icons: {
     icon: [
       {
@@ -31,8 +25,8 @@ export const metadata: Metadata = {
     apple: '/apple-icon.png',
   },
   openGraph: {
-    title: 'Ayidaah Beauty - Rajagiriya, Sri Lanka',
-    description: 'Shop press-on nails, lip tints, lashes, and beauty essentials from Ayidaah Beauty.',
+    title: 'Ayidaah Beauty | Your Look. Your Rules.',
+    description: 'Press-on nails, lashes and colour tints curated in Sri Lanka, delivered islandwide.',
     url: '/',
     siteName: 'Ayidaah Beauty',
     images: [
@@ -47,9 +41,9 @@ export const metadata: Metadata = {
     type: 'website',
   },
   twitter: {
-    card: 'summary',
-    title: 'Ayidaah Beauty - Rajagiriya, Sri Lanka',
-    description: 'Shop press-on nails, lip tints, lashes, and beauty essentials from Ayidaah Beauty.',
+    card: 'summary_large_image',
+    title: 'Ayidaah Beauty | Your Look. Your Rules.',
+    description: 'Press-on nails, lashes and colour tints curated in Sri Lanka, delivered islandwide.',
     images: ['/ayidaah-logo.png'],
   },
 }
@@ -60,11 +54,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="bg-background">
-      <body className="font-sans antialiased">
-        {children}
-        {process.env.NODE_ENV === 'production' && <Analytics />}
-      </body>
+    <html lang="en">
+      <body>{children}</body>
     </html>
   )
 }

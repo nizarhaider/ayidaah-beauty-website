@@ -1,738 +1,378 @@
 'use client'
 
-import { type FormEvent, useState } from 'react'
-import { Heart, MapPin, Phone, Mail, Instagram, Star, Truck, ClipboardCheck } from 'lucide-react'
-import { FloatingWhatsApp } from 'react-floating-whatsapp'
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
+import { useMemo, useState } from 'react'
+import {
+  ArrowRight,
+  Check,
+  ChevronDown,
+  Heart,
+  Instagram,
+  Menu,
+  Minus,
+  PackageCheck,
+  Plus,
+  Search,
+  ShoppingBag,
+  Sparkles,
+  Star,
+  Truck,
+  X,
+} from 'lucide-react'
 
 const WHATSAPP_NUMBER = '94771679595'
-const DISPLAY_PHONE = '+94 77 167 9595'
 const DELIVERY_FEE = 499
 
-const products = [
+type Category = 'Nails' | 'Lashes' | 'Tints'
+
+type Product = {
+  id: string
+  name: string
+  price: number | null
+  category: Category
+  label?: string
+  description: string
+  image: string
+}
+
+const products: Product[] = [
   {
-    id: '1',
+    id: 'coffin-nude-lux',
     name: 'Coffin Nude Lux',
-    price: 'Rs. 2,500',
-    category: 'Press-on Nails - 15pcs included',
-    rating: 5,
-    reviews: 9,
-    image: '/products/coffin-nude-lux.jpeg'
+    price: 2500,
+    category: 'Nails',
+    label: 'BEST SELLER',
+    description: '15-piece press-on set · ready to wear',
+    image: '/products/coffin-nude-lux.jpeg',
   },
   {
-    id: '2',
-    name: 'Mini Almond Pink French Tip',
-    price: 'Rs. 3,500',
-    category: 'Press-on Nails - 15pcs included',
-    rating: 5,
-    reviews: 9,
-    image: '/products/mini-almond-pink-french-tip.jpeg'
+    id: 'mini-almond-french',
+    name: 'Mini Almond Pink French',
+    price: 3500,
+    category: 'Nails',
+    label: 'NEW',
+    description: '15-piece press-on set · petite almond',
+    image: '/products/mini-almond-pink-french-tip.jpeg',
   },
   {
-    id: '3',
-    name: 'Brown Universal Colour Tint',
-    price: 'Ask for shades',
-    category: 'Lip Tint',
-    rating: 5,
-    reviews: 9,
-    image: '/products/brown-universal-colour-tint-packaging.jpeg'
-  },
-  {
-    id: '4',
-    name: 'Ceylon Goddess Lashes',
-    price: 'Ask for styles',
-    category: 'Lashes',
-    rating: 5,
-    reviews: 9,
-    image: '/products/ceylon-goddess-lashes.jpeg'
-  },
-  {
-    id: '5',
+    id: 'colombo-chic',
     name: 'Colombo Chic Lashes',
-    price: 'Ask for styles',
-    category: 'Lashes - Best seller',
-    rating: 5,
-    reviews: 9,
-    image: '/products/colombo-chic-lashes.jpeg'
+    price: null,
+    category: 'Lashes',
+    label: 'BEST SELLER',
+    description: 'Soft volume · reusable lash pair',
+    image: '/products/colombo-chic-lashes.jpeg',
   },
   {
-    id: '6',
+    id: 'ceylon-goddess',
+    name: 'Ceylon Goddess Lashes',
+    price: null,
+    category: 'Lashes',
+    description: 'Full glamour · reusable lash pair',
+    image: '/products/ceylon-goddess-lashes.jpeg',
+  },
+  {
+    id: 'island-queen',
     name: 'Island Queen Lashes',
-    price: 'Ask for styles',
+    price: null,
     category: 'Lashes',
-    rating: 5,
-    reviews: 9,
-    image: '/products/island-queen-lashes.jpeg'
+    description: 'Wispy volume · reusable lash pair',
+    image: '/products/island-queen-lashes.jpeg',
   },
   {
-    id: '7',
+    id: 'lankan-empress',
     name: 'Lankan Empress Lashes',
-    price: 'Ask for styles',
+    price: null,
     category: 'Lashes',
-    rating: 5,
-    reviews: 9,
-    image: '/products/lankan-empress-lashes.jpeg'
-  }
+    description: 'Lightweight drama · reusable lash pair',
+    image: '/products/lankan-empress-lashes.jpeg',
+  },
+  {
+    id: 'universal-tint',
+    name: 'Brown Universal Colour Tint',
+    price: null,
+    category: 'Tints',
+    label: 'AYIDAAH PICK',
+    description: 'Buildable colour · ask us for available shades',
+    image: '/products/brown-universal-colour-tint-packaging.jpeg',
+  },
 ]
 
-const reviews = [
+const categories = [
   {
-    name: 'Hashanee Lahirumalee',
-    meta: '8 reviews · 3 photos',
-    date: '5 months ago',
-    text: 'I got these gorgeous nails done from Nails by Ayidaah, in under 15 minutes, yes it was that fast and the nails stayed on solid. My friends and family thought they my actual nails.'
+    name: 'Press-on nails',
+    note: 'Your salon set in minutes',
+    image: '/nail-art-1.jpg',
+    target: 'Nails' as Category,
   },
   {
-    name: 'Kanishka Balasuriya',
-    meta: '4 reviews · 14 photos',
-    date: '8 months ago',
-    text: 'Highly recommended❤️ I saw this place from TikTok and this was my very first time using press on.'
+    name: 'Lashes',
+    note: 'Made for every kind of gaze',
+    image: '/products/colombo-chic-lashes.jpeg',
+    target: 'Lashes' as Category,
   },
   {
-    name: 'G Kaushani',
-    meta: '3 reviews · 1 photo',
-    date: '5 months ago',
-    text: 'Friendly staff and a lovely place... love it😍😍😍😍'
+    name: 'Colour tints',
+    note: 'One tint, endless looks',
+    image: '/products/brown-universal-colour-tint.jpeg',
+    target: 'Tints' as Category,
   },
-  {
-    name: 'Sashini Manamperi',
-    meta: '3 reviews · 2 photos',
-    date: '5 months ago',
-    text: 'Great service',
-    response: 'Thank you 😊'
-  },
-  {
-    name: 'Sarah Ashfaq',
-    meta: '2 reviews',
-    date: '4 days ago',
-    text: 'I went there today and loved it soo muchh!! The nails turned out soooo prettyy and the customer service was sooo goood!! They were soo friendly and kind.. loved it soo much!! Highly recommended!! Definitely going back again 🤭🫶🏻'
-  },
-  {
-    name: 'Mihini Fernando',
-    meta: '1 review · 3 photos',
-    date: '4 days ago',
-    text: 'Absolutely obsessed with the nails! The attention to detail, cleanliness, and professionalism were all top-tier. The staff was so friendly and made the whole experience relaxing and enjoyable. Highly recommend this place if you want quality work and amazing service! 💅✨',
-    response: 'Thank you for your honesty!'
-  },
-  {
-    name: 'WASSU JAY',
-    meta: '4 reviews · 5 photos',
-    date: 'a week ago',
-    text: 'Love their products and the friendly service. Highly recommended. All the best to ayidaah and the team. Keep up.',
-    response: 'Thank you so much for your honesty!'
-  },
-  {
-    name: 'Vidasi Perera',
-    meta: '3 reviews · 1 photo',
-    date: 'a week ago',
-    text: 'Highly recommended.'
-  }
 ]
+
+const money = (value: number) => `Rs. ${value.toLocaleString('en-LK')}`
 
 export default function Page() {
+  const [activeCategory, setActiveCategory] = useState<'All' | Category>('All')
+  const [cart, setCart] = useState<Record<string, number>>({})
   const [favorites, setFavorites] = useState<Record<string, boolean>>({})
-  const [order, setOrder] = useState({
-    product: products[0].name,
-    name: '',
-    phone: '',
-    address: '',
-    notes: ''
-  })
+  const [cartOpen, setCartOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
+  const [query, setQuery] = useState('')
+  const [toast, setToast] = useState('')
 
-  const toggleFavorite = (id: string) => {
-    setFavorites(prev => ({
-      ...prev,
-      [id]: !prev[id]
-    }))
+  const shownProducts = useMemo(() => {
+    const pool = activeCategory === 'All' ? products : products.filter((product) => product.category === activeCategory)
+    if (!query.trim()) return pool
+    const search = query.toLowerCase()
+    return pool.filter((product) => `${product.name} ${product.category} ${product.description}`.toLowerCase().includes(search))
+  }, [activeCategory, query])
+
+  const searchMatches = useMemo(() => {
+    const search = query.trim().toLowerCase()
+    if (!search) return []
+    return products.filter((product) => `${product.name} ${product.category} ${product.description}`.toLowerCase().includes(search))
+  }, [query])
+
+  const cartItems = products.filter((product) => cart[product.id])
+  const cartCount = Object.values(cart).reduce((total, quantity) => total + quantity, 0)
+  const subtotal = cartItems.reduce((total, product) => total + (product.price ?? 0) * cart[product.id], 0)
+  const hasQuoteItem = cartItems.some((product) => product.price === null)
+
+  const announce = (message: string) => {
+    setToast(message)
+    window.setTimeout(() => setToast(''), 2200)
   }
 
-  const handleProductSelect = (productName: string) => {
-    setOrder(prev => ({ ...prev, product: productName }))
-    document.getElementById('order')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  const addToBag = (product: Product) => {
+    setCart((current) => ({ ...current, [product.id]: (current[product.id] ?? 0) + 1 }))
+    announce(`${product.name} added to your bag`)
   }
 
-  const handleOrderSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
+  const updateQuantity = (id: string, change: number) => {
+    setCart((current) => {
+      const next = Math.max(0, (current[id] ?? 0) + change)
+      const updated = { ...current, [id]: next }
+      if (!next) delete updated[id]
+      return updated
+    })
+  }
+
+  const shopCategory = (category: Category) => {
+    setActiveCategory(category)
+    document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  const checkout = () => {
+    const lines = cartItems.map((product) => `• ${product.name} × ${cart[product.id]} — ${product.price ? money(product.price * cart[product.id]) : 'please confirm price'}`)
     const message = [
-      'Hi Ayidaah Beauty, I would like to confirm this order.',
+      'Hi Ayidaah Beauty! I would like to place this order:',
       '',
-      `Item: ${order.product}`,
-      `Name: ${order.name}`,
-      `Contact number: ${order.phone}`,
-      `Delivery address: ${order.address}`,
-      `Delivery charge: Rs. ${DELIVERY_FEE}`,
-      order.notes ? `Notes: ${order.notes}` : '',
+      ...lines,
       '',
-      'Please confirm availability and share tracking once shipped.'
+      subtotal ? `Product subtotal: ${money(subtotal)}` : '',
+      `Islandwide delivery: ${money(DELIVERY_FEE)}`,
+      hasQuoteItem ? 'Please confirm the available styles/shades and final total.' : `Estimated total: ${money(subtotal + DELIVERY_FEE)}`,
+      '',
+      'Please share payment and delivery details. Thank you!',
     ].filter(Boolean).join('\n')
-    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
-    window.open(whatsappUrl, '_blank')
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer')
   }
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-background text-foreground">
-      {/* Navigation */}
-      <nav className="animate-drop-in sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-secondary">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex min-h-16 flex-wrap items-center justify-between gap-3 py-3">
-            <h1 className="text-lg font-bold text-primary sm:text-xl">Ayidaah Beauty</h1>
-            <div className="hidden md:flex gap-8 items-center">
-              <a href="#featured" className="text-sm font-medium hover:text-primary transition">Products</a>
-              <a href="#about" className="text-sm font-medium hover:text-primary transition">About</a>
-              <a href="#contact" className="text-sm font-medium hover:text-primary transition">Contact</a>
-              <Button size="sm" className="bg-primary hover:bg-primary/90" asChild>
-                <a href="#order">Shop Now</a>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </nav>
+    <main>
+      <a className="skip-link" href="#main-content">Skip to content</a>
 
-      {/* Hero Section */}
-      <section className="relative flex min-h-[calc(100svh-4rem)] items-center overflow-hidden bg-gradient-to-br from-primary/5 via-secondary/10 to-primary/5 py-12 sm:py-14 lg:py-20">
-        <video
-          className="animate-hero-mobile-video absolute inset-0 h-full w-full object-cover sm:hidden"
-          src="/products/mobile-hero-nails.mp4"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          aria-label="Ayidaah press-on nails preview video"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/35 to-black/20 sm:hidden" />
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
-            <div className="animate-hero-copy mx-auto max-w-xl space-y-5 text-center sm:mx-0 sm:space-y-8 sm:text-left">
-              <div>
-                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-white/90 sm:mb-4 sm:text-sm sm:normal-case sm:tracking-normal sm:text-primary">Nails by Ayidaah</p>
-                <h2 className="mb-4 text-4xl font-bold leading-tight text-balance text-white sm:mb-5 sm:text-5xl sm:text-foreground lg:text-6xl">
-                  Beauty, <span className="text-white sm:text-primary">perfectly crafted</span>
-                </h2>
-                <p className="mx-auto mb-6 max-w-sm text-sm leading-relaxed text-white/90 sm:mx-0 sm:mb-7 sm:max-w-xl sm:text-lg sm:text-gray-600">
-                  <span className="sm:hidden">Premium press-on nails, lip tints, and lashes with islandwide delivery.</span>
-                  <span className="hidden sm:inline">Discover premium press-on nails, lip tints, lashes, and beauty essentials from Ayidaah. Order online, send your details through WhatsApp, and receive tracking once your package is shipped.</span>
-                </p>
-              </div>
-              <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
-                <Button size="lg" className="w-full bg-primary hover:bg-primary/90 text-white sm:w-auto" asChild>
-                  <a href="#featured">
-                    Order Now
-                  </a>
-                </Button>
-                <Button size="lg" variant="outline" className="hidden border-primary text-primary hover:bg-primary/10 sm:inline-flex" asChild>
-                  <a href="#contact">
-                    View Details
-                  </a>
-                </Button>
-              </div>
-              <div className="mx-auto flex w-fit items-center gap-2 rounded-full bg-white/95 px-4 py-2 text-sm font-medium text-gray-700 shadow-sm sm:hidden">
-                <Star size={15} className="fill-yellow-400 text-yellow-400" />
-                <span>4.8 Google rating · Rajagiriya</span>
-              </div>
-              <div className="hidden gap-6 pt-2 sm:flex sm:gap-8 sm:pt-4">
-                <div>
-                  <p className="text-2xl font-bold text-primary">4.8</p>
-                  <p className="text-sm text-gray-600">Google Rating</p>
-                </div>
-                <div>
-                  <p className="text-2xl font-bold text-primary">1-2 days</p>
-                  <p className="text-sm text-gray-600">Tracked Delivery</p>
-                </div>
-              </div>
-            </div>
-            <div className="relative hidden sm:block">
-              <div className="animate-hero-media relative h-[340px] overflow-hidden rounded-xl sm:h-96 lg:h-[500px]">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20" />
-                <img
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Gemini_Generated_Image_kzcllckzcllckzcl-tAr7RLjl6DNyFhnPjzsFDESDnl51jd.png"
-                  alt="Ayidaah Lip Liner - Before and After Results"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
-          </div>
+      <div className="announcement" aria-label="Store announcements">
+        <div className="announcement-track">
+          <span>ISLANDWIDE DELIVERY FOR RS. 499</span><i />
+          <span>TRACKING SHARED AFTER DISPATCH</span><i />
+          <span>PRESS-ON SETS INCLUDE 15 PIECES</span><i />
+          <span>ISLANDWIDE DELIVERY FOR RS. 499</span><i />
+          <span>TRACKING SHARED AFTER DISPATCH</span><i />
+        </div>
+      </div>
+
+      <header className="site-header">
+        <button className="header-icon mobile-only" aria-label="Open menu" onClick={() => setMenuOpen(true)}><Menu /></button>
+        <a className="wordmark" href="#top" aria-label="Ayidaah Beauty home">
+          <span>AYIDAAH</span><small>BEAUTY</small>
+        </a>
+        <nav className="desktop-nav" aria-label="Main navigation">
+          <a href="#shop">NEW</a>
+          <a href="#shop" onClick={() => setActiveCategory('Nails')}>NAILS</a>
+          <a href="#shop" onClick={() => setActiveCategory('Lashes')}>LASHES</a>
+          <a href="#shop" onClick={() => setActiveCategory('Tints')}>TINTS</a>
+          <a href="#story">OUR STORY</a>
+        </nav>
+        <div className="header-actions">
+          <button className="header-icon" aria-label="Search products" onClick={() => setSearchOpen(true)}><Search /></button>
+          <a className="header-icon desktop-only" href="https://www.instagram.com/ayidaah_beauty/" target="_blank" rel="noreferrer" aria-label="Ayidaah Beauty on Instagram"><Instagram /></a>
+          <button className="header-icon bag-button" aria-label={`Open bag with ${cartCount} items`} onClick={() => setCartOpen(true)}>
+            <ShoppingBag />
+            {cartCount > 0 && <span>{cartCount}</span>}
+          </button>
+        </div>
+      </header>
+
+      <div id="top" />
+      <section id="main-content" className="hero" aria-labelledby="hero-heading">
+        <video className="hero-video" src="/products/mobile-hero-nails.mp4" autoPlay muted loop playsInline preload="metadata" />
+        <div className="hero-scrim" />
+        <div className="hero-content">
+          <p className="eyebrow">NAILS BY AYIDAAH</p>
+          <h1 id="hero-heading">YOUR LOOK.<br /><em>YOUR RULES.</em></h1>
+          <p>Salon-impact beauty, made effortless. Designed in Sri Lanka for every mood, moment, and main-character entrance.</p>
+          <a className="button button-light" href="#shop">SHOP THE EDIT <ArrowRight /></a>
+        </div>
+        <div className="hero-stamp"><Sparkles /><span>BEAUTY<br />WITHOUT<br />LIMITS</span></div>
+      </section>
+
+      <section id="delivery" className="trust-strip" aria-label="Shopping benefits">
+        <div><Truck /><span><strong>ISLANDWIDE DELIVERY</strong><small>Ships within 1–2 working days</small></span></div>
+        <div><PackageCheck /><span><strong>TRACKED TO YOUR DOOR</strong><small>Tracking shared after dispatch</small></span></div>
+        <div><Sparkles /><span><strong>AYIDAAH QUALITY</strong><small>Curated with care in Rajagiriya</small></span></div>
+      </section>
+
+      <section className="section category-section" aria-labelledby="category-heading">
+        <div className="section-heading split-heading">
+          <div><p className="eyebrow dark">FIND YOUR FAVOURITE</p><h2 id="category-heading">SHOP BY MOOD</h2></div>
+          <p>From five-minute transformations to full-glam moments, your next signature look starts here.</p>
+        </div>
+        <div className="category-grid">
+          {categories.map((category, index) => (
+            <button className="category-card" key={category.name} onClick={() => shopCategory(category.target)}>
+              <img src={category.image} alt="" />
+              <span className="category-number">0{index + 1}</span>
+              <span className="category-copy"><small>{category.note}</small><strong>{category.name}</strong><i>SHOP NOW <ArrowRight /></i></span>
+            </button>
+          ))}
         </div>
       </section>
 
-      {/* Delivery Options */}
-      <section className="animate-section py-12 bg-primary/5 border-y border-secondary">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-8">
-            <div className="delivery-item flex items-center gap-3">
-              <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center">
-                <Truck className="icon-bob text-primary" size={24} />
+      <section id="shop" className="section shop-section" aria-labelledby="shop-heading">
+        <div className="section-heading centered">
+          <p className="eyebrow dark">AYIDAAH ICONS</p>
+          <h2 id="shop-heading">THE BEAUTY SHORTLIST</h2>
+        </div>
+        <div className="tabs" role="tablist" aria-label="Product categories">
+          {(['All', 'Nails', 'Lashes', 'Tints'] as const).map((category) => (
+            <button key={category} role="tab" aria-selected={activeCategory === category} onClick={() => setActiveCategory(category)}>{category === 'All' ? 'BEST SELLERS' : category.toUpperCase()}</button>
+          ))}
+        </div>
+        <div className="product-grid">
+          {shownProducts.map((product) => (
+            <article className="product-card" key={product.id}>
+              <div className="product-image-wrap">
+                <img src={product.image} alt={product.name} />
+                {product.label && <span className="product-label">{product.label}</span>}
+                <button className={`heart ${favorites[product.id] ? 'active' : ''}`} onClick={() => setFavorites((current) => ({ ...current, [product.id]: !current[product.id] }))} aria-label={`${favorites[product.id] ? 'Remove' : 'Add'} ${product.name} ${favorites[product.id] ? 'from' : 'to'} favourites`}><Heart /></button>
+                <button className="quick-add" onClick={() => addToBag(product)}>QUICK ADD <Plus /></button>
               </div>
-              <div>
-                <p className="font-semibold text-foreground">Islandwide Delivery</p>
-                <p className="text-sm text-gray-600">Ships within 1-2 days</p>
+              <div className="product-info">
+                <div className="stars" aria-label="5 out of 5 stars"><Star /><Star /><Star /><Star /><Star /></div>
+                <h3>{product.name}</h3>
+                <p>{product.description}</p>
+                <div><strong>{product.price ? money(product.price) : 'ASK FOR PRICE'}</strong><button onClick={() => addToBag(product)} aria-label={`Add ${product.name} to bag`}><ShoppingBag /></button></div>
               </div>
-            </div>
-            <div className="hidden sm:block w-px h-12 bg-secondary" />
-            <div className="delivery-item flex items-center gap-3">
-              <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center overflow-hidden">
-                <Truck className="icon-bob text-primary" size={24} />
-              </div>
-              <div>
-                <p className="font-semibold text-foreground">Delivery Fee</p>
-                <p className="text-sm text-gray-600">Rs. {DELIVERY_FEE} per order</p>
-              </div>
-            </div>
-            <div className="hidden sm:block w-px h-12 bg-secondary" />
-            <div className="delivery-item flex items-center gap-3">
-              <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center overflow-hidden">
-                <ClipboardCheck className="icon-bob text-primary" size={24} />
-              </div>
-              <div>
-                <p className="font-semibold text-foreground">Tracking Shared</p>
-                <p className="text-sm text-gray-600">After dispatch</p>
-              </div>
-            </div>
-          </div>
+            </article>
+          ))}
+        </div>
+        {shownProducts.length === 0 && <div className="empty-state">No products match “{query}”. <button onClick={() => setQuery('')}>Clear search</button></div>}
+      </section>
+
+      <section className="campaign" aria-labelledby="campaign-heading">
+        <div className="campaign-image"><img src="/nail-art-4.jpg" alt="Pink and gold Ayidaah nail art" /></div>
+        <div className="campaign-copy">
+          <p className="eyebrow">THE PRESS-ON ERA</p>
+          <h2 id="campaign-heading">BIG NAIL<br />ENERGY.</h2>
+          <p>Fifteen pieces. No sizing guesswork. A fresh set whenever the moment calls for it.</p>
+          <button className="button button-light" onClick={() => shopCategory('Nails')}>DISCOVER PRESS-ONS <ArrowRight /></button>
         </div>
       </section>
 
-      {/* Featured Products */}
-      <section id="featured" className="animate-section py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-10 text-center sm:mb-16">
-            <p className="text-sm font-semibold text-primary mb-2">Our Collection</p>
-            <h3 className="mb-4 text-3xl font-bold text-balance sm:text-4xl lg:text-5xl">Featured Products</h3>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Press-on nails, lip tints, and lashes ready to order through WhatsApp. All press-on nail sets include 15pcs, so no size selection is needed.
-            </p>
-          </div>
-
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
-            {products.map((product) => (
-              <Card key={product.id} className="product-card group overflow-hidden hover:shadow-lg transition-shadow">
-                <div className="relative h-64 overflow-hidden bg-secondary/10">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <button
-                    onClick={() => toggleFavorite(product.id)}
-                    className="absolute top-4 right-4 bg-white rounded-full p-2 shadow-md hover:shadow-lg transition-shadow"
-                    aria-label={favorites[product.id] ? 'Remove from favorites' : 'Add to favorites'}
-                  >
-                    <Heart
-                      size={20}
-                      className={favorites[product.id] ? 'fill-primary text-primary' : 'text-gray-400'}
-                    />
-                  </button>
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
-                </div>
-                <div className="p-4 space-y-3">
-                  <p className="text-xs font-semibold text-primary uppercase tracking-wider">
-                    {product.category}
-                  </p>
-                  <h4 className="text-base font-semibold text-foreground sm:text-lg">{product.name}</h4>
-                  <div className="flex items-center gap-1 mb-2">
-                    <div className="flex items-center gap-1">
-                      {[...Array(5)].map((_, i) => (
-                        <Star
-                          key={i}
-                          size={14}
-                          className={i < Math.floor(product.rating) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}
-                        />
-                      ))}
-                    </div>
-                    <span className="text-xs text-gray-600">({product.reviews})</span>
-                  </div>
-                  <div className="flex flex-col gap-3 border-t border-secondary pt-2 sm:flex-row sm:items-center sm:justify-between">
-                    <span className="font-bold text-lg text-primary">{product.price}</span>
-                    <Button 
-                      size="sm" 
-                      className="w-full bg-primary hover:bg-primary/90 sm:w-auto"
-                      onClick={() => handleProductSelect(product.name)}
-                    >
-                      Order Now
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-            ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-white" asChild>
-              <a href="#order">
-                View All Products
-              </a>
-            </Button>
-          </div>
+      <section id="story" className="section story-section" aria-labelledby="story-heading">
+        <div className="story-copy">
+          <p className="eyebrow dark">BORN IN SRI LANKA</p>
+          <h2 id="story-heading">BEAUTY THAT<br /><em>FEELS LIKE YOU.</em></h2>
+          <p>Ayidaah began with one simple belief: great beauty should feel expressive, personal, and easy to wear. From our Rajagiriya studio, we curate details that turn everyday routines into rituals.</p>
+          <a className="text-link" href="https://wa.me/94771679595?text=Hi%20Ayidaah%20Beauty!%20I%27d%20love%20to%20know%20more%20about%20your%20products." target="_blank" rel="noreferrer">CHAT WITH OUR TEAM <ArrowRight /></a>
+        </div>
+        <div className="story-collage">
+          <img className="story-main" src="/ayidaah-team.jpeg" alt="The Ayidaah Beauty team" />
+          <img className="story-detail" src="/nail-art-3.jpg" alt="Ayidaah nail art detail" />
+          <span>4.8<small>GOOGLE RATING</small></span>
         </div>
       </section>
 
-      {/* Order Section */}
-      <section id="order" className="animate-section py-16 bg-primary/5 sm:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-            <div className="space-y-5">
-              <p className="text-sm font-semibold text-primary">Order Details</p>
-              <h3 className="text-3xl font-bold text-balance sm:text-4xl">Confirm your order on WhatsApp</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Add your name, contact number, delivery address, and selected item. Your order details will open directly in WhatsApp for confirmation.
-              </p>
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
-                <div className="order-detail flex gap-4 rounded-lg bg-white p-4 shadow-sm">
-                  <ClipboardCheck className="icon-bob mt-1 shrink-0 text-primary" size={22} />
-                  <div>
-                    <p className="font-semibold">Delivery and tracking</p>
-                    <p className="text-sm text-gray-600">Orders are shipped within 1-2 days, and tracking is shared after dispatch.</p>
-                  </div>
-                </div>
-                <div className="order-detail flex gap-4 rounded-lg bg-white p-4 shadow-sm">
-                  <Truck className="icon-bob mt-1 shrink-0 text-primary" size={22} />
-                  <div>
-                    <p className="font-semibold">Delivery charge</p>
-                    <p className="text-sm text-gray-600">Rs. {DELIVERY_FEE} is added to every confirmed order.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <form onSubmit={handleOrderSubmit} className="order-form rounded-xl bg-white p-5 shadow-sm sm:p-6">
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div className="sm:col-span-2">
-                  <label htmlFor="order-product" className="block text-sm font-medium mb-2">Item</label>
-                  <select
-                    id="order-product"
-                    value={order.product}
-                    onChange={(event) => setOrder(prev => ({ ...prev, product: event.target.value }))}
-                    className="w-full px-4 py-2 rounded-lg border border-secondary focus:outline-none focus:ring-2 focus:ring-primary/50 bg-white"
-                  >
-                    {products.map((product) => (
-                      <option key={product.id} value={product.name}>{product.name}</option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <label htmlFor="order-name" className="block text-sm font-medium mb-2">Name</label>
-                  <input
-                    id="order-name"
-                    required
-                    type="text"
-                    value={order.name}
-                    onChange={(event) => setOrder(prev => ({ ...prev, name: event.target.value }))}
-                    placeholder="Your name"
-                    className="w-full px-4 py-2 rounded-lg border border-secondary focus:outline-none focus:ring-2 focus:ring-primary/50 bg-white"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="order-phone" className="block text-sm font-medium mb-2">Contact number</label>
-                  <input
-                    id="order-phone"
-                    required
-                    type="tel"
-                    value={order.phone}
-                    onChange={(event) => setOrder(prev => ({ ...prev, phone: event.target.value }))}
-                    placeholder="07X XXX XXXX"
-                    className="w-full px-4 py-2 rounded-lg border border-secondary focus:outline-none focus:ring-2 focus:ring-primary/50 bg-white"
-                  />
-                </div>
-                <div className="sm:col-span-2">
-                  <label htmlFor="order-address" className="block text-sm font-medium mb-2">Delivery address</label>
-                  <textarea
-                    id="order-address"
-                    required
-                    value={order.address}
-                    onChange={(event) => setOrder(prev => ({ ...prev, address: event.target.value }))}
-                    placeholder="Street, city, postal code"
-                    rows={3}
-                    className="w-full px-4 py-2 rounded-lg border border-secondary focus:outline-none focus:ring-2 focus:ring-primary/50 bg-white resize-none"
-                  />
-                </div>
-                <div className="sm:col-span-2">
-                  <label htmlFor="order-notes" className="block text-sm font-medium mb-2">Notes</label>
-                  <textarea
-                    id="order-notes"
-                    value={order.notes}
-                    onChange={(event) => setOrder(prev => ({ ...prev, notes: event.target.value }))}
-                    placeholder="Shade, style, quantity, or any extra details"
-                    rows={3}
-                    className="w-full px-4 py-2 rounded-lg border border-secondary focus:outline-none focus:ring-2 focus:ring-primary/50 bg-white resize-none"
-                  />
-                </div>
-              </div>
-              <div className="mt-5 flex flex-col gap-3 border-t border-secondary pt-4 sm:flex-row sm:items-center sm:justify-between">
-                <p className="text-sm text-gray-600">Delivery: Rs. {DELIVERY_FEE} - Ships in 1-2 days</p>
-                <Button type="submit" className="bg-primary hover:bg-primary/90 text-white">
-                  Confirm on WhatsApp
-                </Button>
-              </div>
-            </form>
-          </div>
+      <section className="social-section" aria-labelledby="social-heading">
+        <p className="eyebrow dark">FOLLOW THE LOOK</p>
+        <h2 id="social-heading">@AYIDAAH_BEAUTY</h2>
+        <div className="social-grid">
+          {['/nail-art-2.jpg', '/products/brown-universal-colour-tint-results.jpeg', '/products/island-queen-lashes.jpeg', '/nail-art-1.jpg'].map((image, index) => (
+            <a key={image} href="https://www.instagram.com/ayidaah_beauty/" target="_blank" rel="noreferrer" aria-label={`View Ayidaah Beauty on Instagram, gallery image ${index + 1}`}><img src={image} alt="" /><span><Instagram /> VIEW ON INSTAGRAM</span></a>
+          ))}
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section className="animate-section py-16 bg-white sm:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-10 text-center sm:mb-16">
-            <p className="text-sm font-semibold text-primary mb-2">Customer Love</p>
-            <h3 className="mb-4 text-3xl font-bold text-balance sm:text-4xl lg:text-5xl">NAILS BY AYIDAAH Reviews</h3>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              4.8 rating from real Google reviews for our Rajagiriya location.
-            </p>
-          </div>
-
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {reviews.map((review) => (
-              <Card key={review.name} className="review-card flex h-full flex-col p-5 transition-shadow hover:shadow-lg sm:p-6">
-                <div className="mb-3 flex items-center gap-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={16} className="fill-yellow-400 text-yellow-400" />
-                  ))}
-                </div>
-                <p className="mb-5 flex-1 text-sm leading-relaxed text-gray-600 sm:text-base">
-                  &quot;{review.text}&quot;
-                </p>
-                {review.response && (
-                  <div className="mb-5 rounded-lg bg-primary/5 p-3 text-sm text-gray-600">
-                    <span className="font-semibold text-primary">Owner response:</span> {review.response}
-                  </div>
-                )}
-                <div className="flex items-center gap-3">
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary/20">
-                    <span className="font-bold text-primary">{review.name.charAt(0)}</span>
-                  </div>
-                  <div className="min-w-0">
-                    <p className="truncate font-semibold text-foreground">{review.name}</p>
-                    <p className="text-xs text-gray-500">{review.meta}</p>
-                    <p className="text-xs text-gray-500">{review.date}</p>
-                  </div>
-                </div>
-              </Card>
-            ))}
-          </div>
-        </div>
+      <section className="newsletter">
+        <div><p className="eyebrow">THE AYIDAAH LIST</p><h2>FIRST LOOKS.<br />FRESH DROPS.</h2></div>
+        <form onSubmit={(event) => {
+          event.preventDefault()
+          const email = new FormData(event.currentTarget).get('email')
+          window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hi Ayidaah Beauty! Please add ${email} to the Ayidaah List for new drops and offers.`)}`, '_blank', 'noopener,noreferrer')
+          event.currentTarget.reset()
+          announce('Opening WhatsApp to confirm your sign-up')
+        }}>
+          <label htmlFor="email">Get launches, beauty notes, and private offers.</label>
+          <div><input id="email" name="email" type="email" placeholder="YOUR EMAIL ADDRESS" required /><button aria-label="Join the Ayidaah list"><ArrowRight /></button></div>
+          <small>By signing up, you agree to receive Ayidaah Beauty updates. Unsubscribe anytime.</small>
+        </form>
       </section>
 
-      {/* Gallery Section */}
-      <section className="animate-section py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-10 text-center sm:mb-16">
-            <p className="text-sm font-semibold text-primary mb-2">Our Portfolio</p>
-            <h3 className="mb-4 text-3xl font-bold text-balance sm:text-4xl lg:text-5xl">Beauty Highlights</h3>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Explore our latest press-on nails, lip tints, and lash styles.
-            </p>
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              '/products/coffin-nude-lux.jpeg',
-              '/products/mini-almond-pink-french-tip.jpeg',
-              '/products/brown-universal-colour-tint.jpeg',
-              '/products/brown-universal-colour-tint-results.jpeg',
-              '/products/ceylon-goddess-lashes.jpeg',
-              '/products/colombo-chic-lashes.jpeg',
-              '/products/island-queen-lashes.jpeg',
-              '/products/lankan-empress-lashes.jpeg'
-            ].map((image, index) => (
-              <div key={index} className="gallery-tile group relative h-64 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow">
-                <img
-                  src={image}
-                  alt={`Nail art design ${index + 1}`}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
-                  <button className="opacity-0 group-hover:opacity-100 bg-primary text-white px-6 py-2 rounded-full transition-opacity hover:bg-primary/90">
-                    View Design
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* About Section */}
-      <section id="about" className="animate-section py-20 bg-gradient-to-br from-primary/5 via-secondary/10 to-primary/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
-            <div className="about-image relative h-[340px] overflow-hidden rounded-xl shadow-lg sm:h-96 lg:h-[450px]">
-              <img
-                src="ayidaah-team.jpeg"
-                alt="Ayidaah Beauty Founder with Products"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-            </div>
-            <div className="space-y-6">
-              <div>
-                <p className="text-sm font-semibold text-primary mb-2">About Us</p>
-                <h3 className="mb-4 text-3xl font-bold text-balance sm:text-4xl">Your Beauty, Our Passion</h3>
-              </div>
-              <p className="text-gray-600 leading-relaxed">
-                Ayidaah Beauty is your trusted destination for premium press-on nails, lip tints, lashes, and beauty essentials. Located in Rajagiriya, Sri Lanka, we&apos;re dedicated to bringing you quality products with a simple WhatsApp ordering experience.
-              </p>
-              <p className="text-gray-600 leading-relaxed">
-                Founded with a passion for beauty and self-expression, we carefully curate each product to ensure quality, authenticity, and exceptional results. Our team is always ready to help you confirm the perfect item, delivery details, and tracking for your order.
-              </p>
-              <div className="grid gap-5 pt-4 sm:grid-cols-2 sm:gap-6">
-                <div className="space-y-2">
-                  <h4 className="font-semibold text-primary">Quality Guaranteed</h4>
-                  <p className="text-sm text-gray-600">Curated nails, lip tints, lashes, and beauty essentials</p>
-                </div>
-                <div className="space-y-2">
-                  <h4 className="font-semibold text-primary">Expert Service</h4>
-                  <p className="text-sm text-gray-600">WhatsApp order confirmation with delivery tracking</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section id="contact" className="animate-section py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-10 text-center sm:mb-16">
-            <p className="text-sm font-semibold text-primary mb-2">Get In Touch</p>
-            <h3 className="mb-4 text-3xl font-bold text-balance sm:text-4xl lg:text-5xl">Visit Us Today</h3>
-          </div>
-
-          <div className="grid lg:grid-cols-2 gap-12">
-            <div className="space-y-8">
-              <div>
-                <h4 className="font-bold text-xl mb-6">Contact Information</h4>
-                <div className="space-y-6">
-                  <div className="contact-row flex gap-4 items-start">
-                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <MapPin className="text-primary" size={24} />
-                    </div>
-                    <div>
-                      <h5 className="font-semibold mb-1">Visit Our Store</h5>
-                      <p className="text-gray-600">Rajagiriya, Sri Lanka</p>
-                    </div>
-                  </div>
-
-                  <div className="contact-row flex gap-4 items-start">
-                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <Phone className="text-primary" size={24} />
-                    </div>
-                    <div>
-                      <h5 className="font-semibold mb-1">Call Us</h5>
-                      <p className="text-gray-600">{DISPLAY_PHONE}</p>
-                    </div>
-                  </div>
-
-                  <div className="contact-row flex gap-4 items-start">
-                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <Mail className="text-primary" size={24} />
-                    </div>
-                    <div>
-                      <h5 className="font-semibold mb-1">Email Us</h5>
-                      <p className="text-gray-600">hello@ayidaahbeauty.lk</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <h4 className="font-bold text-xl mb-4">Follow Us</h4>
-                <div className="flex gap-4">
-                  <a href="https://instagram.com/ayidaah_beauty" target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center hover:bg-primary hover:text-white transition">
-                    <Instagram size={20} />
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div className="contact-form bg-gradient-to-br from-primary/5 to-secondary/10 rounded-2xl p-8 space-y-6">
-              <h4 className="font-bold text-xl">Send us a Message</h4>
-              <form className="space-y-4">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium mb-2">Name</label>
-                  <input
-                    id="name"
-                    type="text"
-                    placeholder="Your name"
-                    className="w-full px-4 py-2 rounded-lg border border-secondary focus:outline-none focus:ring-2 focus:ring-primary/50 bg-white"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium mb-2">Email</label>
-                  <input
-                    id="email"
-                    type="email"
-                    placeholder="your@email.com"
-                    className="w-full px-4 py-2 rounded-lg border border-secondary focus:outline-none focus:ring-2 focus:ring-primary/50 bg-white"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium mb-2">Message</label>
-                  <textarea
-                    id="message"
-                    placeholder="Your message..."
-                    rows={4}
-                    className="w-full px-4 py-2 rounded-lg border border-secondary focus:outline-none focus:ring-2 focus:ring-primary/50 bg-white resize-none"
-                  />
-                </div>
-                <Button className="w-full bg-primary hover:bg-primary/90 text-white" type="button" asChild>
-                  <a href="#order">
-                  Place an Order
-                  </a>
-                </Button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-foreground pb-28 pt-12 text-white sm:pb-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
-            <div>
-              <h3 className="font-bold mb-4">Ayidaah Beauty</h3>
-              <p className="text-sm text-gray-300">Press-on nails, lip tints, lashes, and beauty essentials.</p>
-            </div>
-            <div>
-              <h5 className="font-semibold mb-4">Shop</h5>
-              <ul className="space-y-2 text-sm text-gray-300">
-                <li><a href="#featured" className="hover:text-primary transition">All Products</a></li>
-                <li><a href="#featured" className="hover:text-primary transition">Lip Tints</a></li>
-                <li><a href="#featured" className="hover:text-primary transition">Lashes</a></li>
-              </ul>
-            </div>
-            <div>
-              <h5 className="font-semibold mb-4">Company</h5>
-              <ul className="space-y-2 text-sm text-gray-300">
-                <li><a href="#" className="hover:text-primary transition">About Us</a></li>
-                <li><a href="#" className="hover:text-primary transition">Contact</a></li>
-                <li><a href="#" className="hover:text-primary transition">Blog</a></li>
-              </ul>
-            </div>
-            <div>
-              <h5 className="font-semibold mb-4">Legal</h5>
-              <ul className="space-y-2 text-sm text-gray-300">
-                <li><a href="#" className="hover:text-primary transition">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-primary transition">Terms of Service</a></li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t border-gray-700 pt-8 text-center text-sm text-gray-400">
-            <p>&copy; 2026 Ayidaah Beauty. All rights reserved. Rajagiriya, Sri Lanka</p>
-          </div>
-        </div>
+      <footer>
+        <div className="footer-brand"><span>AYIDAAH</span><small>BEAUTY</small><p>Expressive beauty, curated in Sri Lanka.</p></div>
+        <div><h3>SHOP</h3><a href="#shop" onClick={() => setActiveCategory('Nails')}>Press-on nails</a><a href="#shop" onClick={() => setActiveCategory('Lashes')}>Lashes</a><a href="#shop" onClick={() => setActiveCategory('Tints')}>Colour tints</a><a href="#shop">Best sellers</a></div>
+        <div><h3>HELP</h3><a href="https://wa.me/94771679595" target="_blank" rel="noreferrer">Contact us</a><a href="#delivery">Delivery</a><a href="https://maps.google.com/?q=Ayidaah+Beauty+Rajagiriya" target="_blank" rel="noreferrer">Find us</a><a href="#story">Our story</a></div>
+        <div><h3>VISIT & CONNECT</h3><p>Rajagiriya, Sri Lanka</p><a href="tel:+94771679595">+94 77 167 9595</a><a href="https://www.instagram.com/ayidaah_beauty/" target="_blank" rel="noreferrer"><Instagram /> Instagram</a></div>
+        <div className="footer-bottom"><span>© 2026 AYIDAAH BEAUTY</span><span>PRICES IN LKR · SRI LANKA</span></div>
       </footer>
-      <FloatingWhatsApp
-        phoneNumber={WHATSAPP_NUMBER}
-        accountName="Ayidaah Beauty"
-        avatar="/ayidaah-logo.png"
-        statusMessage="Usually replies quickly"
-        chatMessage="Hi! How can we help with your nails today?"
-        placeholder="Type your message..."
-        notification
-        notificationDelay={8000}
-        allowEsc
-      />
+
+      {menuOpen && <div className="overlay" onClick={() => setMenuOpen(false)} />}
+      <aside className={`mobile-menu ${menuOpen ? 'open' : ''}`} aria-hidden={!menuOpen}>
+        <button className="close-button" onClick={() => setMenuOpen(false)} aria-label="Close menu"><X /></button>
+        <p>SHOP AYIDAAH</p>
+        {(['All', 'Nails', 'Lashes', 'Tints'] as const).map((category) => <a key={category} href="#shop" onClick={() => { setActiveCategory(category); setMenuOpen(false) }}>{category === 'All' ? 'New & best sellers' : category}<ArrowRight /></a>)}
+        <a href="#story" onClick={() => setMenuOpen(false)}>Our story <ArrowRight /></a>
+        <div><a href="https://www.instagram.com/ayidaah_beauty/" target="_blank" rel="noreferrer"><Instagram /> Instagram</a><a href="https://wa.me/94771679595" target="_blank" rel="noreferrer">WhatsApp us</a></div>
+      </aside>
+
+      {searchOpen && <div className="search-modal" role="dialog" aria-modal="true" aria-label="Search Ayidaah products">
+        <div className="search-top"><Search /><input autoFocus value={query} onChange={(event) => setQuery(event.target.value)} placeholder="WHAT ARE YOU LOOKING FOR?" /><button onClick={() => setSearchOpen(false)} aria-label="Close search"><X /></button></div>
+        <p>POPULAR: <button onClick={() => setQuery('nails')}>PRESS-ON NAILS</button> <button onClick={() => setQuery('lashes')}>LASHES</button> <button onClick={() => setQuery('tint')}>TINTS</button></p>
+        {query && <div className="search-results">{searchMatches.slice(0, 4).map((product) => <button key={product.id} onClick={() => { setSearchOpen(false); setActiveCategory(product.category); setQuery(''); window.setTimeout(() => document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' }), 0) }}><img src={product.image} alt="" /><span><strong>{product.name}</strong><small>{product.price ? money(product.price) : 'Ask for price'}</small></span><ArrowRight /></button>)}</div>}
+      </div>}
+
+      {cartOpen && <div className="overlay" onClick={() => setCartOpen(false)} />}
+      <aside className={`cart-drawer ${cartOpen ? 'open' : ''}`} aria-hidden={!cartOpen}>
+        <div className="cart-header"><div><h2>YOUR BAG</h2><p>{cartCount} {cartCount === 1 ? 'ITEM' : 'ITEMS'}</p></div><button onClick={() => setCartOpen(false)} aria-label="Close bag"><X /></button></div>
+        {cartItems.length === 0 ? <div className="empty-bag"><ShoppingBag /><h3>YOUR BAG IS WAITING</h3><p>Add an Ayidaah favourite and it’ll appear right here.</p><button className="button button-dark" onClick={() => { setCartOpen(false); document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' }) }}>START SHOPPING</button></div> : <>
+          <div className="cart-items">{cartItems.map((product) => <div className="cart-item" key={product.id}><img src={product.image} alt="" /><div><h3>{product.name}</h3><p>{product.description}</p><strong>{product.price ? money(product.price) : 'PRICE TO CONFIRM'}</strong><div className="quantity"><button onClick={() => updateQuantity(product.id, -1)} aria-label={`Remove one ${product.name}`}><Minus /></button><span>{cart[product.id]}</span><button onClick={() => updateQuantity(product.id, 1)} aria-label={`Add one ${product.name}`}><Plus /></button></div></div></div>)}</div>
+          <div className="cart-summary"><div><span>SUBTOTAL</span><strong>{money(subtotal)}{hasQuoteItem ? ' +' : ''}</strong></div><p>Delivery is {money(DELIVERY_FEE)}. Final availability and total are confirmed on WhatsApp.</p><button className="button button-dark" onClick={checkout}>CHECK OUT ON WHATSAPP <ArrowRight /></button><small><Check /> No online payment required</small></div>
+        </>}
+      </aside>
+
+      {toast && <div className="toast" role="status"><Check /> {toast}</div>}
+      <a className="whatsapp-fab" href="https://wa.me/94771679595?text=Hi%20Ayidaah%20Beauty!" target="_blank" rel="noreferrer" aria-label="Chat with Ayidaah Beauty on WhatsApp">WA</a>
     </main>
   )
 }
